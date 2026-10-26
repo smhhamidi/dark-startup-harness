@@ -8,13 +8,13 @@ Close every agent-opened browser surface when its job slice ends; never close ow
 
 ## Axioms
 
-1. Tabs, windows, debug browser profiles, remote-debugging ports, WebBridge sessions, and Cursor browser tabs the **agent** opened for probes, setup, screenshots, or tests are temporary tools.
+1. Tabs, windows, debug browser profiles, remote-debugging ports, browser-control sessions, and editor-browser tabs the **agent** opened for probes, setup, screenshots, or tests are temporary tools.
 2. Temporary tools that outlive the job become noise, login traps, and focus thieves for the next turn.
 3. The owner's personal browser profile and tabs are not disposable. Closing them (or `Stop-Process` on every browser binary) signs them out and destroys live work.
 
 ## Required behaviour
 
-- When the job slice ends (Pass, Fail, or Blocked), **same turn**: close agent-opened tabs/windows; quit agent-only debug profiles (dedicated `user-data-dir`); release CDP/WebBridge the agent started.
+- When the job slice ends (Pass, Fail, or Blocked), **same turn**: close agent-opened tabs/windows; quit agent-only debug profiles (dedicated `user-data-dir`); release the debug-protocol and browser-control connections the agent started.
 - Prefer closing the **specific** agent window or profile over any global kill.
 - Using an owner's **already-open** logged-in tab as the fastest safe route is allowed — do not close those. Still close anything **new** the agent created alongside.
 

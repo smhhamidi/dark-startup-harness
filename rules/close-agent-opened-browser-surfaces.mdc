@@ -9,7 +9,7 @@ alwaysApply: false
 
 Close every agent-opened browser surface when its job slice ends; never close owner-created surfaces.
 
-- Agent-opened: tabs, windows, debug profiles, CDP/WebBridge, Cursor browser used for probes, setup, screenshots, or tests.
+- Agent-opened: tabs, windows, debug profiles, debug-protocol connections, and editor-browser tabs used for probes, setup, screenshots, or tests.
 - Same turn as Pass / Fail / Blocked: close those surfaces via the **specific** window or profile.
 - Never kill all browser processes. Never close the owner's personal tabs or profile.
 - Owner already-open tabs may be used when that is the fastest safe route — still leave them alone at cleanup; only close what the agent created.
