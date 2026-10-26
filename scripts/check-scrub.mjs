@@ -57,12 +57,29 @@ function walk(dir) {
   return out;
 }
 
+function readText(buf) {
+  // UTF-16 text (BOM-marked) decodes before the NUL test — skipping on NUL
+  // alone would make UTF-16 files invisible to the gate (review round 2,
+  // LOW A: a planted marker in a UTF-16 file passed silently).
+  if (buf.length >= 2 && buf[0] === 0xff && buf[1] === 0xfe) return buf.toString("utf16le");
+  if (buf.length >= 2 && buf[0] === 0xfe && buf[1] === 0xff) {
+    const swapped = Buffer.from(buf);
+    for (let i = 0; i + 1 < swapped.length; i += 2) {
+      const b = swapped[i];
+      swapped[i] = swapped[i + 1];
+      swapped[i + 1] = b;
+    }
+    return swapped.toString("utf16le");
+  }
+  return buf.includes(0) ? null : buf.toString("utf8");
+}
+
 let bad = 0;
 for (const file of walk(ROOT)) {
   if (EXEMPT.has(path.relative(ROOT, file))) continue;
-  const raw = readFileSync(file);
-  if (raw.includes(0)) continue; // binary — no text to leak
-  const lines = raw.toString("utf8").split(/\r?\n/);
+  const text = readText(readFileSync(file));
+  if (text === null) continue; // binary — no text to leak
+  const lines = text.split(/\r?\n/);
   lines.forEach((l, i) => {
     const hit = l.match(MARKERS);
     if (hit) {
