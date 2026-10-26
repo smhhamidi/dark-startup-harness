@@ -30,9 +30,10 @@ needed again — the setup is a bootstrap, not a habit.
    before claiming work done — the cheapest check with the biggest effect.
    Every further gate is added only when a real defect earns one; a gate
    nobody's mistake has earned is unproven weight.
-5. **Import the skills from their origins** (upstream playbooks under MIT):
-   re-diff before importing, never silently overwrite local adaptations, and
-   record provenance inside each imported file.
+5. **Install the shipped skills** — `skills/` in this pack travels with it.
+   Install each into the agent's skills directory with its provenance intact.
+   A skill not shipped here arrives from the owner by hand, never from files,
+   and never guessed at.
 6. **If this project was started by someone else:** adopt the playbook as a
    layer on top, never a rewrite. Their code style, file layout, history and
    decisions stay theirs; the rules govern how work proceeds from now on.

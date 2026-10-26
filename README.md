@@ -13,6 +13,9 @@ live deployment and scrubbed of everything that identifies it.
 - `craft/` — read-by-task guides (how to prove a claim, how to fail and
   learn, how to review high-stakes output, how to govern a rulebook that
   agents grow). Load the one the task needs, never all of them.
+- `skills/` — the portable skills (reproduce-and-isolate, decision-framework,
+  jobs-to-be-done), scrubbed company-local sections, provenance and
+  bibliography intact. Install into the agent's skills directory.
 
 Every rule names its source (owner ruling / agent default / agent inference)
 and every binding lesson names a machine check. Rules nobody uses retire.
