@@ -3,7 +3,7 @@ description: Every rule reaches every agent - a rule change lands where every ag
 alwaysApply: false
 ---
 
-<!-- Source of the portable harness (harness/rules). Edit here, then: npm run harness:publish -->
+<!-- Part of the dark-startup-harness pack, built from a private source tree by its pack build; do not edit here — the source repo is the truth, rebuild to update. -->
 
 # One floor in every tool: every rule reaches every agent
 

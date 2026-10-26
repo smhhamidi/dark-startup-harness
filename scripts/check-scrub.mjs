@@ -52,7 +52,7 @@ function walk(dir) {
     if (name === ".git" || name === "node_modules" || name === ".gitignore") continue;
     const p = path.join(dir, name);
     if (statSync(p).isDirectory()) out.push(...walk(p));
-    else if (/\.(md|mdc|mjs|txt)$/.test(name)) out.push(p);
+    else out.push(p); // every file, whatever the extension — an extension filter is an evasion hole (review round 1, 2026-10-26: a planted marker in a .json passed)
   }
   return out;
 }
@@ -60,7 +60,9 @@ function walk(dir) {
 let bad = 0;
 for (const file of walk(ROOT)) {
   if (EXEMPT.has(path.relative(ROOT, file))) continue;
-  const lines = readFileSync(file, "utf8").split(/\r?\n/);
+  const raw = readFileSync(file);
+  if (raw.includes(0)) continue; // binary — no text to leak
+  const lines = raw.toString("utf8").split(/\r?\n/);
   lines.forEach((l, i) => {
     const hit = l.match(MARKERS);
     if (hit) {

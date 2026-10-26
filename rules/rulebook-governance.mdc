@@ -3,7 +3,7 @@ description: Adding, changing or retiring a rule - every rule names its source, 
 alwaysApply: false
 ---
 
-<!-- Source of the portable harness (harness/rules). Edit here, then: npm run harness:publish -->
+<!-- Part of the dark-startup-harness pack, built from a private source tree by its pack build; do not edit here — the source repo is the truth, rebuild to update. -->
 
 # Rulebook governance
 

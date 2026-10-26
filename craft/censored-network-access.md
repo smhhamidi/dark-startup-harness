@@ -38,7 +38,7 @@ Route the tool's packets at the firewall instead of inside the process:
 
 3. **Wrap both in a systemd unit** (`Restart=on-failure`) so a reboot or crash re-arms the rules and the listener together — the rules without the listener are a black hole for the tool.
 
-4. **Verify the whole chain in one look:** the tool connects, and `iptables -t nat -S OUTPUT | grep <door-port>` lists the rules. A unit that is active but rules missing means the `-C || -A` guard silently skipped nothing — check for a typo'd CIDR or port.
+4. **Verify the whole chain in one look:** the tool connects, and `iptables -t nat -S OUTPUT | grep <door-port>` lists the rules. A unit that is active while the rules are missing means the `-C` pre-check believed the rule was already present — look for a typo'd CIDR, port, or user name in the script (the `-C || -A` pair only adds what `-C` says is absent).
 
 ## Box floor rules
 

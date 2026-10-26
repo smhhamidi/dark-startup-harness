@@ -20,7 +20,7 @@ Source: distilled from a live deployment's goal runner (first slice live 2026-10
 
 - The loop writes only under output paths the deploy pipeline ignores — a state tick never redeploys production.
 - A CI guard fails the build if a state file is gitignored (the state commit would silently no-op — a measured trap).
-- **A missing spec or state file resolves nothing**: fail loud, never silently skip. One loud contract beats a quiet wrong answer.
+- **A missing spec file resolves nothing**: fail loud, never silently skip. One loud contract beats a quiet wrong answer. A missing **state overlay** bootstraps empty *by design* — the run says so in its log line, and an already-done row can run once more (the overlay records it again; the done-check gate keeps the step idempotent).
 
 ## Clock reality
 

@@ -12,8 +12,11 @@ following appear:
 - **Project-specific craft** — guides that depend on this deployment's
   vendors, books or channels are labelled upstream and excluded from the
   build; only craft labelled portable is copied.
-- **Live surface** — no hosts, endpoints, account ids, file paths, tokens or
-  tool inventories.
+- **Live surface** — no hosts, endpoints, account ids, tokens or secrets,
+  and no file paths that open anything live. Rule and craft bodies may cite
+  the source deployment's code paths, commands and evals as *references*
+  (they name where a rule is enforced, and none of them resolve or
+  authenticate from outside); what never ships is anything reachable.
 - **History** — this repository was born fresh and only ever received built
   output, so no scrubbed original hides in an earlier commit. The private
   source's history is not, and cannot be, part of this pack.
