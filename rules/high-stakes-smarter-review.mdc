@@ -1,0 +1,17 @@
+---
+description: High-stakes owner outputs (strategy, money, Match?, canvases) need smarter review before the owner sees them - not every chat line
+alwaysApply: false
+---
+
+<!-- Part of the dark-startup-harness pack, built from a private source tree by its pack build; do not edit here — the source repo is the truth, rebuild to update. -->
+
+# High-stakes smarter review
+
+- **Class B (owner-locked):** Before the owner sees **strategy / board briefs**, **money or Match?/verify claims**, **standalone canvases**, or **product choices that move money or tenancy**, run an **independent smarter review** (stronger model or separate agent). Integrate fixes, then show the owner.
+- If that review **FAIL**s: run failure-learning the same turn (dated learnings + class gate). A canvas-only patch is not close.
+- **Not every output.** Routine ingest ticks, deploy notes, and green test lines do not need a second agent. If unsure, treat as high-stakes. **`self-verify` / typecheck is not Class B** — never tick the review because the build was green.
+- **Unavailable reviewer:** if the smarter pass fails (limit / empty twice), do a **forced local replan** with a different method and live re-reads — then show. Same-author self-talk without that replan is not a review.
+- Does not replace overrun/spin independent checks. Does not write money in the reviewer.
+- Gate: `assertHighStakesReview` in `src/lib/high-stakes-review.ts`.
+
+Craft: `second-order-thinking.md` (high-stakes class B)

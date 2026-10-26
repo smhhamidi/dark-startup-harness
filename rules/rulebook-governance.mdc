@@ -1,0 +1,18 @@
+---
+description: Adding, changing or retiring a rule - every rule names its source, the rulebook stays small, unused rules retire
+alwaysApply: false
+---
+
+<!-- Source of the portable harness (harness/rules). Edit here, then: npm run harness:publish -->
+
+# Rulebook governance
+
+- **Every rule names its source:** owner ruling (a principal's own words or lettered pick), agent default (decided under general delegation), or agent inference (drawn from a remark, quoted with its date). A new agent inference is shown once in the next report to the principals; their reply keeps, changes or drops it. An inference touching money or customers binds only after a principal's explicit yes.
+- **Keep the rulebook small.** Before adding a rule, check whether an existing rule covers it. A mistake that recurs despite a rule is a routing fix (which doc to read before which task), not a new rule. A one-off order or decision is a dated decision, not a rule. Nothing joins the always-loaded block unless it is always-binding rule material: per-task knowledge goes to the routing/craft layer, dated prices and cadences to the decision log. A rule that a newer rule or principle now covers is removed the same change, with a dated note in the decision log; numbers are not reused.
+- **Rules nobody uses retire.** A rule that no task needs any more, or that a later ruling replaced, is removed everywhere it is loaded, with a dated note in the decision log.
+- **Usage is measured, not remembered.** Every routed read is logged (project usage log); a monthly retirement pass lists rules and craft docs with no logged read in the last 30 days as retirement candidates for the principals. Adopted 2026-10-10 (agent default, from the Claude Code creator post lesson).
+- **History is never rewritten.** Dated rulings and lessons get appended amendments, not edits.
+- **Mechanics:** each rule has its craft doc, a row in the project's rule↔craft map and a routing line in the agent entry file; the project's rulebook gate stays green.
+
+Reference gate implementation: `scripts/check-harness.ts`.
+Craft: `rulebook-governance.md`

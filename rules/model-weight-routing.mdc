@@ -1,0 +1,17 @@
+---
+description: Assign model strength to task weight — light models must not do judgment, review, or audit
+alwaysApply: false
+---
+
+<!-- Part of the dark-startup-harness pack, built from a private source tree by its pack build; do not edit here — the source repo is the truth, rebuild to update. -->
+
+# Model-weight routing
+
+- Mechanical work (search, format, boilerplate) → light model.
+- Bounded implementation with a named test → medium model.
+- Judgment, architecture, ambiguous root-cause, money/security paths, and every review/audit/exam → strongest model available this turn.
+- When in doubt: higher tier if the answer is not independently verifiable; lower tier if a test or probe will catch a miss.
+- A light-model pass is not a review. Confident-wrong on judgment costs more than the tokens saved.
+
+Gate: `assertModelWeight` in `src/lib/model-weight-routing.ts`.
+Craft: `model-weight-routing.md`

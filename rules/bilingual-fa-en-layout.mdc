@@ -1,0 +1,21 @@
+---
+description: Persian owner lines must carry zero Latin letters — English on its own line so RTL/LTR does not scramble
+alwaysApply: false
+---
+
+<!-- Part of the dark-startup-harness pack, built from a private source tree by its pack build; do not edit here — the source repo is the truth, rebuild to update. -->
+
+# Bilingual FA/EN layout
+
+When owner-facing prose mixes **Persian and English**, Latin on the same line as Persian breaks RTL/LTR in Cursor chat — **even inside backticks**.
+
+- **Own-line English (primary):** paths, commands, rule ids, npm scripts, URLs, and status labels on their **own line**, under **جزئیات** / **Details**, or in a fenced block.
+- **Persian lines = zero Latin letters.** Backticks mid-sentence are not enough.
+- **Cursor chat default (2026-08-23):** prefer **English** owner replies — this UI left-aligns RTL and does not present Persian correctly. Persian only if the owner asks that turn; bilingual habit is mitigation only, not an RTL fix.
+- Does **not** replace the shared reporting rules or `owner-facing-sensors`. Does **not** apply to English-only replies.
+
+Before send (Persian draft): `assertBilingualFaEnLayout` on the text.
+
+Gate: `src/lib/bilingual-fa-en-layout.ts` (`assertBilingualFaEnLayout`).
+
+Craft: `bilingual-fa-en-layout.md`

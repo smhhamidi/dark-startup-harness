@@ -1,0 +1,24 @@
+---
+description: New skills and standing habits require first principles, compound learning, primary sources, and a smarter-model exam Pass before ticking learned
+alwaysApply: false
+---
+
+<!-- Part of the dark-startup-harness pack, built from a private source tree by its pack build; do not edit here — the source repo is the truth, rebuild to update. -->
+
+# Agent skill learning
+
+When acquiring or claiming a **new skill / domain competency**, or encoding a **new standing habit** as learned curriculum:
+
+1. **First principles** — axioms first; do not learn by analogy alone.
+2. **Compound / semantic tree** — trunk (fundamentals), then branches, then leaves; re-derive advanced from basics.
+3. **Primary sources** — cite top-tier public docs/specs/papers (non-empty list); chat memory, secondary blogs, and peer craft packs alone are invalid as primaries.
+4. **Recursive** — minimum to unblock, then deepen using what was just learned.
+5. **Exam** — independent smarter model (or forced replan only after smarter attempt failed — record the reason) defect-checks understanding.
+6. **Tick only on Pass** — named acceptance/rejection; never tick “learned” without exam Pass and a reviewer note.
+7. **Redo the original owner task** after fail → learn → exam Pass. Learning is not delivery. Gate: `assertPostLearningOwnerTaskRedo`.
+
+Does **not** apply to trivial learnings typos or hardening an already-encoded class via failure-learning alone. Does **not** replace Class B owner-output review. Novel habit claimed as competency → failure-learning **and** this protocol.
+
+Reference gate implementation: `src/lib/skill-learning.ts` (`assertSkillLearningComplete`, `assertPostLearningOwnerTaskRedo`).
+
+Craft: `agent-skill-learning.md`

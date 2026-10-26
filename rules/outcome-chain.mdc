@@ -1,0 +1,15 @@
+---
+description: Product and strategy claims must name Customer / Product / Business outcomes and both value create and capture
+alwaysApply: false
+---
+
+<!-- Part of the dark-startup-harness pack, built from a private source tree by its pack build; do not edit here — the source repo is the truth, rebuild to update. -->
+
+# Outcome chain
+
+- Before claiming product or strategy SoT, name three layers: Customer outcome (customer language), Product outcome (measurable human behaviour), Business outcome (organisation metric).
+- Name both **value create** and **value capture**. A create-only chain hides capture defects.
+- Link coefficients come from measured data. If data is missing, build a parametric chain and name the break-even — do not guess.
+
+Gate: `assertOutcomeChain` in `src/lib/outcome-chain.ts`.
+Craft: `outcome-chain.md`

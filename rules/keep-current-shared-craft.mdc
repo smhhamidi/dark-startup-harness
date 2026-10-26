@@ -1,0 +1,19 @@
+---
+description: Weekly check of a configured outside playbook - new or changed rules come to the principals as suggestions, never adopted silently
+alwaysApply: false
+---
+
+<!-- Source of the portable harness (harness/rules). Edit here, then: npm run harness:publish -->
+
+# Keep current with shared craft
+
+Applies when the project configures an external craft pack (another team's agent playbook). No host is hardcoded anywhere — the pack location comes from project configuration, and the habit is skipped when none is set.
+
+- The project's own rulebook and principles remain the source of truth. An external pack is **peer craft only**, never product truth.
+- **Check it weekly** (and when a principal asks). Do not claim "up to date" from chat memory: compare the live pack version against the project's stamp file, read-only.
+- **New or changed rules are suggestions, never adoptions.** Each one goes to the principals in the next report, labelled **agent inference** with the pack rule it came from, and joins the rulebook only on a principal's yes. Leave another product's domain content (its stack, release scripts, market, pricing, infrastructure) out entirely.
+- On each check: update the stamp, and record what was deliberately not adopted and why — an unadopted area must be a stated decision, not a silent gap.
+- Never write or contribute to a shared pack unless a principal orders it in that turn, and never put credentials in one.
+- Stamp shape is gated even when no live pack URL is set: retrievable locator, digest or explicit null, non-empty deliberate non-adoption. Gate: `assertCraftPackStampShape`.
+
+Craft: `keep-current-shared-craft.md`

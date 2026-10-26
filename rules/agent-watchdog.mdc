@@ -1,0 +1,18 @@
+---
+description: A daily check by a second agent of what the main agent did - big mistakes flagged and reversed, a quiet day gives one line
+alwaysApply: false
+---
+
+<!-- Source of the portable harness (harness/rules). Edit here, then: npm run harness:publish -->
+
+# Agent watchdog
+
+- **What:** once a day a second agent (a different model or vendor from the main agent) checks what the main agent did that day: money bookings, releases, customer messages and rule changes. The point is to catch big mistakes, not to grade style.
+- **Outcome:** a big mistake is flagged with its evidence; the main agent reverses it (a reversal is a new opposite entry, never an edit or delete of history) and reports the reversal. A quiet day gives the principals one line. Findings go into the collective failures ledger so the next run inherits them.
+- **Bounds:** read-only for the checker; it does not interrupt a running task and is not a money source of truth. It never asks a principal to do the check's work.
+- **Pace:** daily by default; the autonomy score may tighten it after repeated big mistakes and relax it back once days stay quiet.
+- **Start:** the project decides when the check starts; a check that silently stops running is itself a defect to report.
+
+Gate: `assertWatchdogTick` / `computeAutonomyScore` / `nextIntervalSeconds` in `src/lib/agent-watchdog.ts`.
+
+Craft: `agent-watchdog.md`

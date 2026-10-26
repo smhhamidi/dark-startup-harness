@@ -1,0 +1,14 @@
+---
+description: Every attended ship (push to a shared branch, PR merge, release) carries an independent-review trace before it ships - a human merge-click is not a review
+alwaysApply: false
+---
+
+<!-- Part of the dark-startup-harness pack, built from a private source tree by its pack build; do not edit here — the source repo is the truth, rebuild to update. -->
+
+# Independent review before ship
+
+- **Before an attended ship** (push to a shared branch, PR merge, release), record a review **trace** with the change, before it ships: **verdict** (Pass / FAIL / Pass-with-notes), **reviewer** (an independent agent or model session — never the author session; a principal's merge click is approval, not review), **scope** (the commits or diff covered).
+- The trace may say `none — <reason>` for routine housekeeping; it may never be silent.
+- A FAIL verdict is a failure-learning trigger the same turn; the ship waits for the fix or an explicit principal decision to proceed anyway.
+- Unattended scheduled pushes keep their standing release gate (fully green automatic tests, one change at a time) and get their review from the daily watchdog after the fact.
+- Craft: `independent-review-before-ship.md`

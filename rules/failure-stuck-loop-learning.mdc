@@ -1,0 +1,60 @@
+---
+description: On failure, stuck loop, or owner dispute - learn in the same turn and harden the class
+alwaysApply: false
+---
+
+<!-- Part of the dark-startup-harness pack, built from a private source tree by its pack build; do not edit here — the source repo is the truth, rebuild to update. -->
+
+# Failure / stuck-loop learning
+
+Learning specialization of the harness. On failure, run this protocol inside the loop **automatically** — do not wait for the owner to order a harness fix.
+
+## Triggers (same turn)
+
+- Acceptance fails / task failure / stuck loop (same approach twice with no new evidence)
+- Owner must repeat an instruction
+- Owner disputes a reported result
+- Owner voids prior guidance ("forget…", "update your memory")
+- Owner challenges process compliance ("did you follow the harness?", "why did you narrow…?", "did you learn from the failure?")
+- Independent review FAIL on an owner-facing brief or canvas
+- Agent self-admission of a skipped harness step or unreliable delivery
+
+## Protocol
+
+1. Stop the bad loop — including stopping any re-defence of the failed report.
+2. Diagnose with evidence.
+3. **Realign acceptance** — before restarting the fix: restate acceptance, rejection, and the evaluation; get a short owner confirm (or “run it” / “decide yourself” / chosen A/B/C). Do not TDD/repair against an unspoken criterion after failure.
+4. Append a dated entry to the project's durable learnings — VOID superseded entries when guidance changes. Chat memory alone is invalid.
+5. **Fix the class where a check can block it** (TDD when code/eval changes) — not only the one instance. Any new rule drawn from the failure is an **agent inference**: labelled with the incident and its date, shown once to the principals, and kept small — prefer a check or a routing line over another rule (`rulebook-governance`).
+6. Re-test / re-issue under the agreed playbook — **re-execute the original owner task**. A patch of the failed artifact is not a redo (`assertPostLearningOwnerTaskRedo`).
+7. Escalate last: one plain ask after real autonomous attempts; A/B/C with a recommendation when two legitimate product truths disagree.
+
+First-pass jobs still name Pass/Fail before acting without this pause. The realign step is for **restart after failure / dispute / stuck repair**.
+
+## Learn the class
+
+An instance patch alone is incomplete. Ask: what family of mistakes is this? Block the family with a check where one can; otherwise record the lesson. Bad: "don't show that one column." Good: "no internal or mirror field may appear on an owner-facing table, asserted mechanically."
+
+## Anti-patterns (forbidden)
+
+- Re-asserting success after the owner names a different number.
+- A "lesson" that only blames the owner's view instead of treating human-visible ground truth as a failed sensor.
+- Closing without a learnings append plus a re-measure or a product choice.
+- Treating agent-created artifacts as co-equal owner truth without owner confirmation.
+- Shipping an instance patch and calling the learning loop done.
+- Patching only the owner-facing canvas after an independent review FAIL, without dated learnings and a class gate.
+- Explaining a harness miss without running this protocol the same turn.
+- Waiting for the owner to say "fix the harness" after a self-admission or process challenge.
+- Restarting repair after failure without restating and confirming acceptance/rejection/evaluation.
+- **Secret-scrape stuck loops:** OCR, desktop UI click-paths, notification-DB digs, or multitask forks to extract one-shot secrets (app login codes, cloud 2FA passwords, OTP, 3DS). After the waiter is primed, **ask once**, keep it warm, submit immediately. Two scrapes with no new evidence = already stuck — stop and ask.
+
+## Stuck / overrun interrupt
+
+- Two identical failed attempts with no new evidence is already a stuck loop — stop, do not retry the same approach a third time.
+- Overrun or spin requires an **independent check** (short parallel auditor, or local forced replan). Same-agent self-talk is not an audit.
+
+Delegating to a subagent does **not** waive this checklist.
+
+Gate: `assertFailureLearningTurn` + `assertFailureAcceptanceRealign` + `assertIndependentReviewClose` in `src/lib/failure-learning.ts`. `assertFailureLearningTurn` requires `lockDiagnosis` and `resumedAbandonedWork`.
+
+Craft: `failure-stuck-loop-learning.md`

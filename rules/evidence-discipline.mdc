@@ -1,0 +1,51 @@
+---
+description: A claim earns "proven" only with mechanism + controls + a reference number; fixes ship as classes
+alwaysApply: false
+---
+
+<!-- Part of the dark-startup-harness pack, built from a private source tree by its pack build; do not edit here — the source repo is the truth, rebuild to update. -->
+
+# Evidence discipline
+
+## Causation
+
+- **Proven, never inferred.** No mechanism observed in the system itself = hypothesis. Label it.
+- **One sweep is not elimination.** Need all three: background error rate in the same window, a **negative control** that must stay healthy, and the **clock** (change-live time vs symptom-stop time). Failed control or a rollout window ⇒ **inconclusive**, not confirmed.
+- Read the **error body / stack**, not the status code. Prove a layer from that layer's own logs.
+- Debug the **live code path** (route → handler → sink), not the familiar file.
+- Prove environmental assumptions too: coverage, unit of policy, layer boundary, reachability.
+
+## Numbers
+
+- **An observation without a reference is not evidence.** "It went down" ≠ "it is wrong." Compute the expected value independently (direct count / raw query / manual tally) before filing a defect. Do not name a suspect before proving there was a crime.
+- Sweep the **whole real value space**, not a hand-picked row.
+- Boundaries lose data silently: "has the field" ≠ has the data; a success response ≠ rows landed; written ≠ retained; accepted ≠ queryable. Prove the effect.
+- Absence in one list is not deletion — confirm in a second source before destructive action.
+- Peers of "the same" service can hold different configuration. Verify the instance actually serving the traffic.
+
+## Fixes
+
+- Deliverable = **fix + proof it covers the class + stated validity boundary**. One case green with no class proof is a code smell.
+- Structural guard > test > written rule. The guard asserts the **invariant at risk**, not your implementation.
+- Inferred signals (OCR, model inference, fuzzy scores) are **weights, not filters** — a wrong weight is visible and recoverable, a wrong filter is invisible absence. A hard filter needs a recorded measurement showing weighting alone cannot hold quality; prefer parking ambiguous items in a visible queue over dropping them.
+- Cost is correctness: budget-check anything moved into a per-item path. Walk the least-code ladder (not at all → config → composition → smaller change one layer down → new code).
+- After a move/refactor, prove equivalence at the level of **output** — replay real inputs through both paths.
+
+## Documents
+
+- Label claims **Confirmed / Inferred / Unknown** inline.
+- **Never write a currently-true number in prose** — give the live read location, or stamp it `Observed YYYY-MM-DD`.
+- Record the **why** with every rule; a bare verdict has no validity boundary.
+- "Pushed" ≠ "delivered": verify the consuming path reads from where you wrote it.
+- Never leave a topic as a disclaimer — "not documented yet" is worse than silence.
+
+## Owner claims
+
+Owner values and books-of-record govern. Owner **empirical** claims (causes, users, market) are hypotheses to check against primary evidence — never a reason to dismiss an owner dispute.
+
+## Budget and overrun
+
+Classify the verify job first (smoke ≤ 3 min / targeted ≤ 8 min / sweep ≤ 25 min once). A job past budget or spinning triggers an audit: making progress or repeating? scope matched to purpose (smallest sufficient slice)? faster route? In-budget work stays with the same agent. Overrun or spin requires an **independent check** (short parallel auditor, or local forced replan) — same-agent self-talk is not an audit. Gate: `assertOverrunAudit`.
+
+Reference gate implementation: `src/lib/evidence-discipline.ts` (`assertCausalClaim`, `assertReferencedFinding`, `assertClassFix`, `assertNoUnstampedLiveNumbers`, `assertOverrunAudit`, `assertFastestRouteChosen`, `assertHumanFacingOutputWasSeen`, `assertAnswerNamesItsCriterion`, `assertSecondIndependentSource`, `assertFieldProvenance`, `assertServingArtifactNotMerge`, `assertTriageBeforeDeepDive`).
+Craft: `evidence-discipline.md`

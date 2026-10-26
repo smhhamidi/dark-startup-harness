@@ -1,0 +1,23 @@
+---
+description: Before substantive work, inventory and obtain skills, tools, access, and information — do not start on hope
+alwaysApply: false
+---
+
+<!-- Part of the dark-startup-harness pack, built from a private source tree by its pack build; do not edit here — the source repo is the truth, rebuild to update. -->
+
+# Pre-task readiness inventory
+
+Before starting a **substantive** task (accounting / Match? / money / multi-step delivery / new domain work):
+
+0. **Search past lessons for this problem first** (the project's lessons index → the one or two matching entries). Lessons are notes: never loaded by default, never treated as rules.
+1. **Inventory in one opening batch** skills, tools, access, information, and test data the loop needs.
+2. **Obtain gaps before starting** — skill gaps via `agent-skill-learning` (exam Pass); access via inventory + live probe (`ops-access-before-ask`); tools/info via fetch/install or honest block. One round of owner asks, then run to completion.
+3. **Do not begin** implementation or live digs until ready, or escalate a real hard block.
+4. Fetch ladder before claiming unreachable — including mid-task, not only at start. Orient before the first analysis. Seek current primary docs / best practices for external tools-APIs-plugins in scope before implementing (`bestPracticeSought`; chat memory alone is invalid). Do not leave a closeable blocker. "No access" only after two routes and a named failure layer (`assertRoutesTriedBeforeBlocker`).
+5. Desktop app "not running" / "can't send": ≥2 probes (process name **and** Win32_Process / MainWindowTitle / install path) before claiming absent (`assertDesktopAppAbsentClaim`). Owner says it is open → re-probe; never re-defend the empty filter.
+
+Forbidden: discovering mid-task that competence, access, or fixtures were never inventoried; implementing without a best-practice seek when externals are in scope; scattered mid-task owner asks; partial failure-learning (admit + chat fix without class gate). Routine Q&A / smoke-only replies are exempt.
+
+Reference gate implementation: `src/lib/pre-task-readiness.ts` (`assertPreTaskReadiness`, `assertRoutesTriedBeforeBlocker`, `assertDesktopAppAbsentClaim`).
+
+Craft: `pre-task-readiness.md`

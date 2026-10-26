@@ -1,0 +1,18 @@
+---
+description: Before a multi-turn goal, claim it in a shared file so parallel sessions do not duplicate it
+alwaysApply: false
+---
+
+<!-- Part of the dark-startup-harness pack, built from a private source tree by its pack build; do not edit here — the source repo is the truth, rebuild to update. -->
+
+# Parallel sessions announce
+
+Before starting a multi-turn goal, read the shared claims list and write this session's claim (goal, since, session). If another session already holds that goal, join it or pick another.
+
+Close the claim when done or abandoned. A stale open claim is worse than none.
+
+Unfinished-work state lives on the task record. This list only says who holds what **now**.
+
+Gate: `assertActiveGoalClaim` in `src/lib/active-goal-claim.ts`.
+
+Craft: `parallel-sessions-announce.md`

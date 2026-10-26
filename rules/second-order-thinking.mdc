@@ -1,0 +1,21 @@
+---
+description: High-impact decisions require first- and second-order effects plus a validity boundary before acting
+alwaysApply: false
+---
+
+<!-- Part of the dark-startup-harness pack, built from a private source tree by its pack build; do not edit here — the source repo is the truth, rebuild to update. -->
+
+# Second-order thinking
+
+Before acting on a **high-impact** decision (money write or claim, tenancy, production side effect, standing habit/rule change, owner product choice that moves money or tenancy):
+
+1. Name **first-order** effects (what changes immediately).
+2. Name **second-order** effects (knock-ons of those effects — not a copy of the first list).
+3. State the **validity boundary** (where the chain stops being claimed).
+4. If a knock-on violates a safety invariant or the owner’s books-of-record, revise before acting.
+
+Does **not** apply to routine smoke ticks or every chat sentence. Does **not** replace Class B owner-output review or evidence-discipline proof standards.
+
+Reference gate implementation: `src/lib/second-order-thinking.ts` (`assertSecondOrderThinking`).
+
+Craft: `second-order-thinking.md`

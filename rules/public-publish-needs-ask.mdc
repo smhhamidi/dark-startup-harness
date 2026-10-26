@@ -1,0 +1,18 @@
+---
+description: Unauthenticated public URLs need an explicit owner ask to publish — a file request is not permission
+alwaysApply: false
+---
+
+<!-- Part of the dark-startup-harness pack, built from a private source tree by its pack build; do not edit here — the source repo is the truth, rebuild to update. -->
+
+# Public publish needs an ask
+
+"Give me the file" or "give me the link" is not permission to host on an **unauthenticated** URL. Until the owner explicitly says to make it public, deliver the file in chat or put it behind login.
+
+Private git push is not public publishing. An unguessable address is not access control.
+
+If it went up and the owner said no: take it down the same turn and prove the address no longer serves.
+
+Gate: `assertPublicPublishAsked` in `src/lib/public-publish.ts`.
+
+Craft: `public-publish-needs-ask.md`

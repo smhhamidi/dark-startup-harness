@@ -1,0 +1,23 @@
+---
+description: Owner-facing reports compare owner books-of-record to the system only - no internal mirrors
+alwaysApply: false
+---
+
+<!-- Part of the dark-startup-harness pack, built from a private source tree by its pack build; do not edit here — the source repo is the truth, rebuild to update. -->
+
+# Owner-facing sensors
+
+- Owner **tables** (match / verify / dry-run / acceptance): only the owner's books-of-record, the figure in the system, and the difference. Never internal mirrors, agent-built artifacts, sync probes or engineer-debug fields.
+- Owner **prose, checklists and where-to-look**: lead with the document the owner already opens — its link, the exact tab/section and the exact column — and what "good" looks like. Do **not** name internal mirrors in the main body (not even to say "ignore them"), and do not dump API paths as the primary answer; engineer detail goes under **Details**.
+- Compare **system evidence** to the **owner's** record only. System-vs-own-mirror is an internal check and must never be reported as "your books match".
+- Fix the **class** — all non-authoritative internals off owner surfaces, plus a mechanical gate — not just the one bad column or phrase.
+- When the owner voids prior guidance: supersede the memory entry the same turn, harden craft and rule, and re-issue under the new schema only.
+- **Learn the business yourself.** Do not make the owner teach measurable definitions (which column is the balance, fee vs total, what a tab is for) as routine — read the live records, the project KB and the code. Owner corrections are sensors that prior learning failed.
+- Displayed owner-document fields (Date, Type, Amount) must be proven against that document before calling them missing. A stored blank is not proof the owner's cell is empty.
+- Owner-facing activity, vendor, or volume **counts** use unique workbooks (one book once), not duplicate registry names that share a book.
+- Owner-facing **partitions** (credit / debit / flat) must add to the stated population.
+- Named money figures on an owner brief must be **re-read at publish** — a sweep snapshot is not the live Sheet.
+- The **first sentence** is the result. Match the owner's language. Quotes mean verbatim. A number correction must reach the artifact the owner reads in the same turn.
+
+Reference gate implementation: `src/lib/owner-facing-report.ts` (`assertOwnerFacingCountUsesUniqueWorkbook`, `assertOwnerFacingCountPartition`, `assertOwnerFacingNamedFiguresLive`).
+Craft: `evidence-discipline.md` (owner-facing surfaces)

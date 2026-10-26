@@ -1,0 +1,19 @@
+---
+description: Close agent-opened browser tabs/windows/debug profiles when the job ends — never the owner's personal browser
+alwaysApply: false
+---
+
+<!-- Part of the dark-startup-harness pack, built from a private source tree by its pack build; do not edit here — the source repo is the truth, rebuild to update. -->
+
+# Close agent-opened browser surfaces
+
+Close every agent-opened browser surface when its job slice ends; never close owner-created surfaces.
+
+- Agent-opened: tabs, windows, debug profiles, CDP/WebBridge, Cursor browser used for probes, setup, screenshots, or tests.
+- Same turn as Pass / Fail / Blocked: close those surfaces via the **specific** window or profile.
+- Never kill all browser processes. Never close the owner's personal tabs or profile.
+- Owner already-open tabs may be used when that is the fastest safe route — still leave them alone at cleanup; only close what the agent created.
+
+Gate: `assertAgentBrowserCleanup` in `src/lib/agent-browser-cleanup.ts`.
+
+Craft: `close-agent-opened-browser-surfaces.md`

@@ -1,0 +1,18 @@
+---
+description: Every rule reaches every agent - a rule change lands where every agent the team uses actually reads it, or names a reasoned exception
+alwaysApply: false
+---
+
+<!-- Source of the portable harness (harness/rules). Edit here, then: npm run harness:publish -->
+
+# One floor in every tool: every rule reaches every agent
+
+- The team runs several agents (different vendors, different apps). A principal should never have to explain the same thing twice, once per agent. A rule therefore lives in **one shared rulebook** that every agent reads, not in one agent's private notes or one editor's settings.
+- When you add or change a rule, put it in the shared rulebook the **same turn**, in every copy agents load (each repository's agent entry file carries an identical copy, because agents opened inside a repository never read above its root). A principle kept only in one agent's private memory is moved into the shared rulebook.
+- If an agent cannot read it, record a **named exception with a reason** — never leave the gap silent.
+- Parity is **mechanical** — name the check that compares the copies (`parityCheckId`: e.g. `check:harness`). A bare "done" is not parity.
+- Retired tools are not floors: do not publish rules into the settings of an editor nobody uses.
+
+Gate: `assertOneFloorWired` in `src/lib/one-floor.ts`.
+
+Craft: `one-floor-in-every-tool.md`
