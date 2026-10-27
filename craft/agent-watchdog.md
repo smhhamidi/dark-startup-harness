@@ -22,12 +22,20 @@ Rules and failure-learning only help when the agent that failed actually runs th
 2. Decide per area: quiet, or a big mistake with evidence (what, where, why it is wrong, the correct state).
 3. Flag big mistakes to the main agent's queue. The main agent reverses them and reports the reversal on its next daily line. Reversals are new opposite entries; history is never edited or deleted.
 4. Report to the principals: one line on a quiet day; otherwise the flagged items, plain language, outcome first.
-5. Append each big mistake to the collective failures ledger (`harness/collective/failures.md` template; `npm run watchdog:bootstrap` seeds a working copy) so the class is visible to the next run.
+5. Append each big mistake to the working collective failures ledger (`~/.cursor/plugins/local/dark-startup-harness/collective/failures.md`; `npm run watchdog:bootstrap` seeds it from the pristine `harness/collective/failures.md` template — the repo template is never appended to) so the class is visible to the next run.
 6. Record the tick (`npm run watchdog:tick`), which updates the autonomy score.
 
 ## Autonomy score → pace
 
 Score 0–100. Daily is the default pace. Repeated big mistakes tighten the pace (`nextIntervalSec` halves, floor 900 seconds) until days stay quiet; quiet days relax it back to daily. Gates: `src/lib/agent-watchdog.ts` (`npm run eval:agent-watchdog`).
+
+## Server tick — the daily check keeps running with no laptop awake
+
+The tick is a machine check, not a prose habit, and like every machine check in this craft it fails loudly when it silently stops. It runs on GitHub Actions and watches the machines that work for the company (owner go 2026-10-22 «i do agree»):
+
+1. **Hourly drop (each machine).** `scripts/watchdog-drop.mjs` publishes the machine's 7-day scorecard window (its latest 40) and its collective state files (autonomy state, the failures ledger, certifications), each box under its own `--host`, onto the private repo's `watchdog-state` branch — a commit-plumbing write that never triggers CI, refuses to run if the branch resolves to main or master, and ships only a manifest heartbeat — naming the refusal — instead of publishing files that hit a secret pattern. Scorecards carry violation strings only; raw command content stays local. A refused drop keeps the manifest flowing precisely so the server's staleness check keeps seeing that machine.
+2. **Daily tick (server).** `.github/workflows/watchdog.yml` checks out the dropped state and runs `scripts/watchdog-server.mjs`, which judges each machine's scorecards with the same reader a real machine uses (`discipline-tick.mjs`, pointed at the dropped directory) — session math is reused, never re-implemented.
+3. **Red light structure.** It is exactly one question: is the review loop alive? No machine reporting, or a machine silent for 3 days, runs red. Session violations never turn the run red — they stay loud in `state/flags/latest.json` for the daily sessions to read.
 
 ## Anti-patterns
 
