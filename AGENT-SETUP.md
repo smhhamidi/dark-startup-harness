@@ -40,11 +40,14 @@ needed again — the setup is a bootstrap, not a habit.
    Land the adoption as one reviewed change in their repo, keep their
    conventions in everything you touch, and let the first report name what
    was adopted and what their project keeps unchanged.
-7. **Updates travel by git — check for them.** At each session start (or
-   the moment the owner says an update is out): pull the pack's clone
-   (`git pull`), re-run the sync check — it fails on unrecorded drift vs
-   upstream, which is the update arriving — adopt what changed with
-   provenance recorded, and report what changed.
+7. **Updates travel by git — plant the habit where it re-fires.** This
+   file is a bootstrap, read once; the habit must live where every session
+   re-reads it. The setup pass adds one line to the project's entry
+   instruction file: "Session start: pull the harness-pack clone
+   (`git pull`) and re-run the sync check — it fails on unrecorded drift
+   versus the pack clone, which is an update arriving; adopt what changed
+   with provenance recorded, and report what changed." An update is out
+   when the owner says so, or when the pull moves.
 8. **Verify, then report.** Run the sync check (rules ↔ craft ↔ routing —
    write it if it does not exist; the pack's README names what it fails on)
    and the self-check. The report states: what was installed, what is

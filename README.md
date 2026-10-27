@@ -37,8 +37,12 @@ and do what it says." It performs the whole first-session setup pass in one go.
 
 This repository only ever receives **built output**. It is regenerated from a
 private source repo by a build script and passes a scrub gate before every
-push. **Receiving side:** adopters check for updates by pulling their clone
-of this repository and re-running their sync check at each session start. Do not send pull requests here with content changes — the content
+push. **Receiving side:** the setup pass plants one line in the adopting
+project's entry instruction file — session start: pull the pack clone and
+re-run the sync check, which fails on unrecorded drift versus the pack
+clone when an update has arrived; adopt what changed and report.
+
+Do not send pull requests here with content changes — the content
 originates upstream. See [PROVENANCE.md](PROVENANCE.md) for what is
 deliberately not here, and [CREDITS.md](CREDITS.md) for the pattern's roots.
 
