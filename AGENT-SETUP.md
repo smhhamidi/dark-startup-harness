@@ -40,7 +40,12 @@ needed again — the setup is a bootstrap, not a habit.
    Land the adoption as one reviewed change in their repo, keep their
    conventions in everything you touch, and let the first report name what
    was adopted and what their project keeps unchanged.
-7. **Verify, then report.** Run the sync check (rules ↔ craft ↔ routing —
+7. **Updates travel by git — check for them.** At each session start (or
+   the moment the owner says an update is out): pull the pack's clone
+   (`git pull`), re-run the sync check — it fails on unrecorded drift vs
+   upstream, which is the update arriving — adopt what changed with
+   provenance recorded, and report what changed.
+8. **Verify, then report.** Run the sync check (rules ↔ craft ↔ routing —
    write it if it does not exist; the pack's README names what it fails on)
    and the self-check. The report states: what was installed, what is
    deliberately absent and arrives from the owner in person (live access,
