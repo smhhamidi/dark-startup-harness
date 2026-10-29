@@ -46,10 +46,16 @@ Per task-continuity-contract: **instructed** (prose only) / **fixture-tested**
 **witnessed end-to-end** (observed live). In this pack, every gate line
 citing `src/lib/*.ts` or `npm run eval:*` is **instructed**. What ships and
 runs: `scripts/check-scrub.mjs` (fails closed; prove it fires on a planted
-marker) and `scripts/check-sync.mjs` (`--self-test` proves it fires on a
-planted orphan). An installation report states **enforcement coverage** —
-which checks are green because a machine ran them — never just copied files
-and reachable documents.
+marker), `scripts/check-sync.mjs` (`--self-test` proves it fires on seven
+planted defect classes, including a manifest fingerprint mismatch), and
+`scripts/adoption-test.mjs` — a fixture install of the whole pack into a
+throwaway project, the pack's own **fixture-tested** proof that the checks
+behave on the receiving side, not just on the publisher's. `MANIFEST.json`
+fingerprints every shipped file; `node scripts/check-sync.mjs` verifying the
+manifest is the received pack's completeness check — nothing missing,
+nothing swapped after packing. An installation report states **enforcement
+coverage** — which checks are green because a machine ran them — never just
+copied files and reachable documents.
 
 Dates and source labels (owner ruling / agent default / agent inference) are
 kept deliberately: they are the portability lesson itself, and a date alone

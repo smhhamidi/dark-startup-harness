@@ -61,7 +61,12 @@ needed again — the setup is a bootstrap, not a habit.
    craft; the yes-gate settles precedence when the owner's own recorded
    ruling and the pack disagree — never whether the craft deserves
    respect.
-8. **Verify, then report.** Run the shipped sync check from the pack clone
+8. **Verify, then report.** Run the shipped adoption test from the pack clone
+   (`node scripts/adoption-test.mjs`) once: it rehearses the whole install in
+   a throwaway project and proves each check behaves — a clean install
+   passes, a planted drift fails, a recorded override passes, missing
+   configuration fails closed, and the received pack matches its manifest.
+   Then run the shipped sync check from the pack clone
    (`node scripts/check-sync.mjs`; pass `--rules`/`--craft`/`--entry` for a
    non-default layout — run `--self-test` once first and confirm the gate
    fires on a planted orphan before trusting it) and the self-check. The

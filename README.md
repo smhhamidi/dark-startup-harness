@@ -25,6 +25,12 @@ live deployment and scrubbed of everything that identifies it.
 - `skills/` — the portable skills (reproduce-and-isolate, decision-framework,
   jobs-to-be-done), scrubbed company-local sections, provenance and
   bibliography intact. Install into the agent's skills directory.
+- `scripts/` + `MANIFEST.json` — the machine checks that travel with the pack:
+  `check-scrub.mjs` (the publisher's scrub gate, fails closed), `check-sync.mjs`
+  (rules ↔ craft ↔ routing consistency, drift versus this clone, and the
+  manifest), `adoption-test.mjs` (a dress rehearsal of the install), and
+  `MANIFEST.json` — the packing slip: every shipped file with its fingerprint,
+  so a received pack can be proven complete and untampered, file by file.
 
 Every rule names its source (owner ruling / agent default / agent inference)
 and every binding lesson names a machine check. Rules nobody uses retire.
@@ -45,6 +51,12 @@ and do what it says." It performs the whole first-session setup pass in one go.
    `--pack <clone>` it also fails on drift versus the pack clone — an
    update arriving. Run `--self-test` once and confirm it fires before
    trusting it.
+4. Test-drive the install once: `node scripts/adoption-test.mjs` from the
+   pack root rehearses the whole adoption in a throwaway project — it proves
+   the checks actually fire there (a planted drift fails, a recorded override
+   passes, missing configuration fails closed) and that the received pack
+   matches its manifest. Files copied is not files working; this is the
+   difference, proven in one command.
 
 ## How this pack updates
 

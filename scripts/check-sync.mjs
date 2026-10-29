@@ -10,6 +10,9 @@
  *     skills/ nor is listed in PROVENANCE.md's "Referenced, not shipped" table
  *   - routing line: the entry file (and the pack's AGENT-SETUP.md, when present)
  *     must name the routing table the adopting project builds
+ *   - manifest: when a MANIFEST.json exists (the packing slip the build writes),
+ *     every listed file is present with its recorded sha256 and every tree file
+ *     is listed — what shipped is what is on disk, nothing swapped or missing
  *
  * Upstream drift (--pack <path to a pack clone>): every rules/*.mdc and
  * craft/*.md in the clone is hash-compared against the local copies under
@@ -63,6 +66,7 @@ function parseArgs(argv) {
     else if (a === "--craft") opt.craft = argv[++i];
     else if (a === "--entry") opt.entry = argv[++i];
     else if (a === "--pack") opt.pack = argv[++i];
+    else if (a === "--manifest") opt.manifest = argv[++i];
     else if (a === "--overrides") opt.overrides = argv[++i];
     else {
       console.error(`sync check FAILED: unknown argument "${a}" (try --help)`);
@@ -250,7 +254,60 @@ function runChecks(cfg) {
       }
     }
   }
-  return { problems, notes };
+
+  // --- manifest (pack integrity: the tree matches what was packed) ---
+  const manifestPath = cfg.manifest
+    ? path.resolve(cfg.manifest)
+    : path.join(cfg.pack ?? ROOT, "MANIFEST.json");
+  let manifestVerified = false;
+  if (existsSync(manifestPath)) {
+    let manifest;
+    let parsed = false;
+    try {
+      manifest = JSON.parse(readFileSync(manifestPath, "utf8"));
+      parsed = true;
+    } catch {
+      problems.push("manifest: MANIFEST.json is not valid JSON");
+    }
+    // A valid-JSON non-object (`null`, `false`, …) must fail loudly, not skip
+    // the lane with a quiet pass (review note 2, 2026-10-29)
+    if (parsed && (manifest === null || typeof manifest !== "object" || Array.isArray(manifest))) {
+      problems.push('manifest: MANIFEST.json is not a manifest object (expected {"pack":…, "files":{…}})');
+    } else if (parsed && (typeof manifest.files !== "object" || manifest.files === null || Array.isArray(manifest.files))) {
+      problems.push('manifest: MANIFEST.json has no "files" map');
+    } else if (parsed) {
+      const rootDir = path.dirname(manifestPath);
+      const listed = new Set(Object.keys(manifest.files));
+      for (const [rel, hash] of Object.entries(manifest.files)) {
+        const p = path.join(rootDir, ...rel.split("/"));
+        if (!existsSync(p)) {
+          problems.push(`manifest: ${rel} is listed but missing from the tree — the pack is incomplete`);
+          continue;
+        }
+        if (statSync(p).isDirectory()) {
+          problems.push(`manifest: ${rel} is a directory, not a file`);
+          continue;
+        }
+        if (typeof hash !== "string" || sha256(p) !== hash) {
+          problems.push(`manifest: ${rel} does not match its recorded fingerprint — the file changed after packing`);
+        }
+      }
+      // The packing slip must cover the whole box: scrub-markers.txt is a
+      // build-time transient (written then deleted) and MANIFEST.json never
+      // lists itself; everything else on disk must appear on the slip.
+      for (const f of walkDir(rootDir)) {
+        const rel = path.relative(rootDir, f).split(path.sep).join("/");
+        if (rel === "MANIFEST.json" || rel === "scripts/scrub-markers.txt") continue;
+        if (!listed.has(rel)) {
+          problems.push(`manifest: ${rel} is in the tree but not listed — rebuild the pack or add it`);
+        }
+      }
+      manifestVerified = true;
+    }
+  } else {
+    notes.push("manifest check skipped: no MANIFEST.json here (an older pack, or a source checkout)");
+  }
+  return { problems, notes, manifestVerified };
 }
 
 function selfTest() {
@@ -276,6 +333,24 @@ function selfTest() {
   );
   w(path.join("packclone", "rules", "good.mdc"), "# good rule — drifted\n\nCraft: `good-craft.md`\n");
   w(path.join("packclone", "craft", "good-craft.md"), "# good craft\n");
+  // manifest fixture: the craft entry carries its true hash, the rule entry a
+  // wrong one — the fingerprint mismatch must fire and nothing else may
+  const goodCraftHash = sha256(path.join(tmp, "packclone", "craft", "good-craft.md"));
+  w(
+    path.join("packclone", "MANIFEST.json"),
+    `${JSON.stringify(
+      {
+        pack: "selftest",
+        counts: { rules: 1, craft: 1, skillFiles: 0 },
+        files: {
+          "rules/good.mdc": "0".repeat(64),
+          "craft/good-craft.md": goodCraftHash,
+        },
+      },
+      null,
+      2,
+    )}\n`,
+  );
   w("entry.md", "# entry file missing its task-type map\n");
   const { problems } = runChecks({
     rules: path.join(tmp, "rules"),
@@ -292,6 +367,7 @@ function selfTest() {
     ["unresolved dependency", /unresolved dependency: .*ghost-skill/],
     ["routing line", /routing line: .*entry\.md/],
     ["drift", /drift: good\.mdc differs/],
+    ["manifest fingerprint", /manifest: rules\/good\.mdc does not match its recorded fingerprint/],
   ];
   const missed = expected.filter(([, re]) => !problems.some((p) => re.test(p)));
   const noise = problems.filter((p) => !expected.some(([, re]) => re.test(p)));
@@ -303,7 +379,7 @@ function selfTest() {
     process.exit(1);
   }
   console.log(
-    "sync check self-test: PASS — all 6 planted defects fired (orphan rule, broken citation, unmapped craft, unresolved dependency, routing line, drift)",
+    "sync check self-test: PASS — all 7 planted defects fired (orphan rule, broken citation, unmapped craft, unresolved dependency, routing line, drift, manifest fingerprint)",
   );
 }
 
@@ -317,8 +393,9 @@ if (opt.help) {
       "       [--craft <dir>] [--pack <clone>] [--overrides <file>]     # adopter check",
       "  node scripts/check-sync.mjs --self-test                        # prove the gate fires",
       "Checks: orphan rule, broken citation, unmapped craft, unresolved skill",
-      "dependency, routing line; plus clone drift when --pack is given. Fails",
-      "closed — missing configuration is a failure, never a silent pass.",
+      "dependency, routing line; clone drift when --pack is given; and the",
+      "packing manifest (MANIFEST.json) when one exists. Fails closed — missing",
+      "configuration is a failure, never a silent pass.",
     ].join("\n"),
   );
   process.exit(0);
@@ -327,13 +404,14 @@ if (opt.selfTest) {
   selfTest();
   process.exit(0);
 }
-const { problems, notes } = runChecks({
+const { problems, notes, manifestVerified } = runChecks({
   rules: path.resolve(opt.rules ?? "rules"),
   craft: path.resolve(opt.craft ?? "craft"),
   entry: path.resolve(opt.entry ?? "README.md"),
   skills: path.resolve("skills"),
   provenance: path.resolve("PROVENANCE.md"),
   pack: opt.pack ? path.resolve(opt.pack) : null,
+  manifest: opt.manifest ?? null,
   overrides: opt.overrides ? path.resolve(opt.overrides) : null,
 });
 for (const n of notes) console.log(`note: ${n}`);
@@ -344,5 +422,6 @@ if (problems.length) {
 }
 console.log(
   "sync check: PASS — rules ↔ craft ↔ routing consistent" +
-    (opt.pack ? ", no drift versus the pack clone" : ""),
+    (opt.pack ? ", no drift versus the pack clone" : "") +
+    (manifestVerified ? ", manifest verified" : ""),
 );
