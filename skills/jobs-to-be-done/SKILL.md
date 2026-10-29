@@ -9,7 +9,7 @@ description: >-
   fire, "what are customers really trying to do", "customers ask for X — should
   we build it", feature removal, a new product line, positioning against a
   competitor — and before any "what should we do about X" strategy answer, even
-  when nobody says JTBD. Pairs with data-sufficiency before a number decides.
+  when nobody says JTBD. Pairs with data-sufficiency before a number decides (not shipped with this pack — owner-supplied; see PROVENANCE.md).
 ---
 
 # Jobs to be done (JTBD)
@@ -27,6 +27,8 @@ Sources, from the literature as known to the model, not re-read in the session t
 - **[K]** Alan Klement, *When Coffee and Kale Compete* (2016): job stories, and competition across
   categories.
 Anything not tagged is this skill's own addition.
+
+**Evidence status:** the literature summary above was written from model knowledge on 2026-09-16 and has not been re-read against the sources since — treat every tagged claim as a paraphrase until verified. The active evidence rules inside the procedure: scope-match each complaint source and name its bias (step 3); secondary data produces hypotheses only, never findings (step 6); the switch-interview stopping rule is ten to fifteen interviews, and contacting users is outward-facing — the person you work for decides who and how.
 
 ## The model
 
@@ -133,7 +135,9 @@ point. Their need shows direction. Their proposed solution is still only a want.
 5. **Weigh the forces** for the switch you want (for example from phoning the clinic to booking online):
    push, pull, anxiety, habit, each with evidence.
 6. **Judge.** Which jobs are underserved, and for whom. Secondary data only produces *hypotheses*. Run the
-   `data-sufficiency` skill before a number decides anything. Confirmation needs switch interviews
+   `data-sufficiency` skill before a number decides anything (not shipped with this pack —
+   owner-supplied by hand, see PROVENANCE.md; without it, label the judgment an evaluation,
+   never a number). Confirmation needs switch interviews
    (below) or an importance/satisfaction survey. Order the work by harm over cost, with a named
    affected user, as a queue to investigate rather than a plan, not by opportunity score alone.
 7. **Design implications** as job stories, each with the force it moves and how to test it by behaviour.

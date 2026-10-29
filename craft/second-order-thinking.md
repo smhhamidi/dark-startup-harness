@@ -71,6 +71,10 @@ If unsure: classify **high-stakes** and review.
 5. If the smarter reviewer is **unavailable** (API limit, empty twice): **forced local replan** with a different method (fresh live reads + defect list), label that path, and still correct before showing. Same-author self-congratulation without a replan is not a review.
 6. Never claim “reviewed” when no independent smarter pass and no forced replan happened.
 
+### Review quality — what makes a review count
+
+Model tier alone proves nothing: a reviewer handed only the author's summary repeats its assumptions. A Class B review states its own scope: the **evidence it inspected** (named files, reads, numbers — never "the report"), what it **excluded** and why, the **acceptance criteria** it judged against, and its **unresolved objections** — an explicit "none" is a claim, not a gap. Same-agent fallback is labelled as such, never as "reviewed". Calibrate a reviewer lane once with a planted defect: a high-stakes artifact carrying one known wrong number and one known overclaim; a review that passes the artifact without catching both is a failing review, whatever model wrote it.
+
 ### Validity boundary of the review
 
 - Does **not** require a second agent on every message or every tool result.
@@ -84,6 +88,7 @@ If unsure: classify **high-stakes** and review.
 
 - classifies kind → `high_stakes` | `routine`
 - for high-stakes, requires `review_path`: `smarter_subagent` | `forced_replan`
+- for high-stakes, requires non-empty `evidenceInspected` and an explicit (possibly empty) `unresolvedObjections`
 - rejects `none` / same-author-only on high-stakes
 
 Eval: `npm run eval:evidence` (includes high-stakes cases) or focused import of the assert.

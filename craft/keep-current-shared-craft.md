@@ -8,6 +8,10 @@ Check the pack **weekly**. Do **not** claim "up to date" from chat memory: curre
 
 The project's own rulebook and principles remain the source of truth. An external pack is **peer craft**, never product truth, and nothing in it binds the project until a principal says yes.
 
+## Scope — two lanes
+
+This guide governs **external peer packs**: another team's playbook the project borrows from. The harness pack's own update channel is a different lane (its AGENT-SETUP step 7): there, portable craft, tooling and fixes adopt on pull, and only changed or new binding rules arrive here as suggestions. In both lanes the material is respected and followed as craft — "peer craft, never product truth" settles **precedence** (whose ruling wins when the project's owner and the pack disagree), never the craft's worth.
+
 ## Check triggers (any one)
 
 1. A week has passed since the stamp.

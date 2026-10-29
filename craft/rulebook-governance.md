@@ -2,7 +2,7 @@
 
 > Portable craft. A rulebook maintained by agents grows on its own: every incident adds a rule and nothing removes one. Unread rules do not change behaviour, and rules written from one remark bind the principals in words they never chose. The fix is one short rule (owner review, 2026-10-05): every rule names its source, and rules nobody uses retire.
 
-Reference gate implementation: `scripts/check-harness.ts`.
+Reference gate implementation: `scripts/check-harness.ts`; the portable equivalent shipped with this pack: `scripts/check-sync.mjs` (it fails on the first four of the definition-of-done list below — the fourth, a drifted copy, only when run with `--pack <clone>`; the fifth — unstamped currently-true numbers — is project-specific and stays with the source gate).
 
 ## 1. Every rule names its source
 

@@ -41,6 +41,19 @@ An owner dispute, process challenge, void, or agent self-admission is **acceptan
 
 A lesson without a check is fine when no check can block the family; a new rule is the last resort, never the default (the rulebook stays small).
 
+## Scale the response to the incident
+
+The five-way diagnosis in mechanism step 5 classifies the **cause**; this table scales the **response**. Every row still appends the durable lesson — what scales is the ceremony:
+
+| Incident | Response |
+|---|---|
+| **Finding** (new evidence, not a defect) | Update the belief; no lock, no realign round-trip |
+| **Isolated execution error**, acceptance unchanged | Correct and verify under the existing authorization — no confirmation round-trip (a repair with clear acceptance reuses it, task-continuity contract) |
+| **Recurring mechanism** — same class observed again | Targeted safeguard: the smallest check that blocks the family, and one rung up, because the first response did not hold |
+| **High-consequence systemic failure** | This whole protocol, realign-confirm included |
+
+Recurrence is an **observed** event — the same class seen again — and it drives escalation. Never estimate how many recurrences were prevented: a prevention count is a counterfactual nobody can observe, and a measurement needing such contortions is itself the defect ([`evidence-discipline.md`](evidence-discipline.md)).
+
 ## Same-turn checklist (every trigger above)
 
 1. Acknowledge that the prior report, process, or guidance failed the human check (or the agent's self-check).

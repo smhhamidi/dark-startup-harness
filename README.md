@@ -12,7 +12,16 @@ live deployment and scrubbed of everything that identifies it.
   directory; they are written to be always-managed, not always-loaded).
 - `craft/` — read-by-task guides (how to prove a claim, how to fail and
   learn, how to review high-stakes output, how to govern a rulebook that
-  agents grow). Load the one the task needs, never all of them.
+  agents grow). Load the one the task needs, never all of them:
+  agent-browser-control, agent-skill-learning, agent-telegram,
+  agent-watchdog, bilingual-fa-en-layout, censored-network-access,
+  close-agent-opened-browser-surfaces, evidence-discipline,
+  failure-stuck-loop-learning, independent-review-before-ship,
+  keep-current-shared-craft, model-weight-routing, one-floor-in-every-tool,
+  outcome-chain, parallel-sessions-announce, pre-task-readiness,
+  proactive-onboarding-arc, public-publish-needs-ask, rulebook-governance,
+  second-order-thinking, self-driving-goal-loop, self-improving-harness,
+  task-continuity-contract.
 - `skills/` — the portable skills (reproduce-and-isolate, decision-framework,
   jobs-to-be-done), scrubbed company-local sections, provenance and
   bibliography intact. Install into the agent's skills directory.
@@ -30,8 +39,12 @@ and do what it says." It performs the whole first-session setup pass in one go.
 2. Add one routing table to your entry instruction file: task type → which
    craft doc to read first. Craft is read on demand; only the routing table
    is always loaded.
-3. Keep the two halves in sync mechanically: a small check that fails on a
-   rule citing no craft, an unmapped craft doc, or a drifted copy.
+3. Keep the two halves in sync mechanically: `scripts/check-sync.mjs` ships
+   with the pack. Internal consistency always (an orphan rule, a broken
+   citation, an unmapped craft doc, an unresolved skill dependency); with
+   `--pack <clone>` it also fails on drift versus the pack clone — an
+   update arriving. Run `--self-test` once and confirm it fires before
+   trusting it.
 
 ## How this pack updates
 
@@ -39,8 +52,11 @@ This repository only ever receives **built output**. It is regenerated from a
 private source repo by a build script and passes a scrub gate before every
 push. **Receiving side:** the setup pass plants one line in the adopting
 project's entry instruction file — session start: pull the pack clone and
-re-run the sync check, which fails on unrecorded drift versus the pack
-clone when an update has arrived; adopt what changed and report.
+re-run the sync check, which fails on drift versus the pack clone when an
+update has arrived; adopt what changed and report. Fetching grants no
+authority by itself: portable craft, tooling and fixes adopt on pull, and
+a changed or new binding rule joins the project's rulebook only on the
+owner's yes.
 
 Do not send pull requests here with content changes — the content
 originates upstream. See [PROVENANCE.md](PROVENANCE.md) for what is

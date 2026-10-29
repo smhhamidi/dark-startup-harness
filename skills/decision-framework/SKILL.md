@@ -197,4 +197,4 @@ the overlay). Marked [U] = any startup · [M] = two-sided-marketplace flavored.
 - A sentence that still sticks after honest rewrites signals an unripe claim, not a
   writing debt. [U]
 
-Use with `reproduce-and-isolate`: that skill names the cause; this one decides what to do about it. Pairs with `data-sufficiency` before any number decides.
+Use with `reproduce-and-isolate`: that skill names the cause; this one decides what to do about it. Pairs with `data-sufficiency` before any number decides (not shipped with this pack — owner-supplied; see PROVENANCE.md).

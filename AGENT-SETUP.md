@@ -23,7 +23,10 @@ needed again — the setup is a bootstrap, not a habit.
    [PROVENANCE.md](PROVENANCE.md)): a dated **decision log** (every ruling:
    source label + date + scope + the words it came from) and a dated
    **learnings ledger** (one entry per lesson, one index line per entry).
-   Empty on day one is correct — they fill as work lands. This is also how
+   Empty on day one is correct — they fill as work lands. Until rulings
+   land, the pack's principles stand as the working defaults, as given; an
+   explicit ruling from this project's owner supersedes any of them, and it
+   lands in this log. This is also how
    this machine's state reaches the standing state fast: every durable
    answer lands in a repo file the same day, never only in chat.
 4. **Build the first gate early:** one self-check command the session can run
@@ -33,7 +36,8 @@ needed again — the setup is a bootstrap, not a habit.
 5. **Install the shipped skills** — `skills/` in this pack travels with it.
    Install each into the agent's skills directory with its provenance intact.
    A skill not shipped here arrives from the owner by hand, never from files,
-   and never guessed at.
+   and never guessed at; PROVENANCE.md ("Referenced, not shipped") lists
+   every such item, so an absence is deliberate, never a broken install.
 6. **If this project was started by someone else:** adopt the playbook as a
    layer on top, never a rewrite. Their code style, file layout, history and
    decisions stay theirs; the rules govern how work proceeds from now on.
@@ -44,12 +48,25 @@ needed again — the setup is a bootstrap, not a habit.
    file is a bootstrap, read once; the habit must live where every session
    re-reads it. The setup pass adds one line to the project's entry
    instruction file: "Session start: pull the harness-pack clone
-   (`git pull`) and re-run the sync check — it fails on unrecorded drift
-   versus the pack clone, which is an update arriving; adopt what changed
-   with provenance recorded, and report what changed." An update is out
-   when the owner says so, or when the pull moves.
-8. **Verify, then report.** Run the sync check (rules ↔ craft ↔ routing —
-   write it if it does not exist; the pack's README names what it fails on)
-   and the self-check. The report states: what was installed, what is
-   deliberately absent and arrives from the owner in person (live access,
-   secrets, account logins — never from files), and one next step.
+   (`git pull`) and re-run the sync check (`node scripts/check-sync.mjs`
+   from the clone, with `--rules`/`--craft` pointing at the project's
+   installed copies and `--pack` at the clone) — a failure on drift versus
+   the pack clone means an update arrived; fetch it, inspect what changed,
+   and report what changed."
+   Fetching grants no authority by itself. Portable craft, tooling and
+   fixes adopt on pull with provenance recorded; a changed or new
+   **binding rule** travels as a suggestion and joins the project's
+   rulebook only on the owner's yes (the keep-current law). Respect is the
+   default posture in both lanes: the pack's material is followed as
+   craft; the yes-gate settles precedence when the owner's own recorded
+   ruling and the pack disagree — never whether the craft deserves
+   respect.
+8. **Verify, then report.** Run the shipped sync check from the pack clone
+   (`node scripts/check-sync.mjs`; pass `--rules`/`--craft`/`--entry` for a
+   non-default layout — run `--self-test` once first and confirm the gate
+   fires on a planted orphan before trusting it) and the self-check. The
+   report states: what was installed; what is deliberately absent and
+   arrives from the owner in person (live access, secrets, account logins —
+   never from files); **enforcement coverage** — which checks are green
+   because a machine ran them, and which guards are instructed only
+   (PROVENANCE.md "Enforcement levels" names them); and one next step.

@@ -49,6 +49,10 @@ This is the same class as Mode A vendor payments (agent does all except iframe P
 task → one-batch inventory (skills/tools/access/info/test data) → obtain gaps → best-practice seek → ready → run to completion
 ```
 
+## Exploratory tasks — progressive readiness
+
+The one-batch inventory is the bar for **predictable** execution. Research and exploratory work discovers information requirements during the investigation, and that is not a planning failure. For an exploratory task: inventory and obtain what the **first safe step** needs; start there; record each emerging gap as a blocker attached to its work item ([`task-continuity-contract.md`](task-continuity-contract.md)) and obtain it when the next dependent action needs it — one ask at the moment of need, independent branches continuing meanwhile. A requirement genuinely undiscoverable at start is not an inventory defect; an ask the opening batch should have covered still is.
+
 ## Blockers
 
 "No access" is a **result**, not an observation. Name and try at least two routes; name the failure layer (missing key / missing path / wrong key / service down). A cookie is a credential. Gate: `assertRoutesTriedBeforeBlocker`.
