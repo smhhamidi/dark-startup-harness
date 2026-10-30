@@ -418,6 +418,7 @@ function selfTest() {
   // manifest fixture: the craft entry carries its true hash, the rule entry a
   // wrong one — the fingerprint mismatch must fire and nothing else may
   const goodCraftHash = sha256(path.join(tmp, "packclone", "craft", "good-craft.md"));
+  const renamedHash = sha256(path.join(tmp, "packclone", "rules", "renamed-pack.mdc"));
   w(
     path.join("packclone", "MANIFEST.json"),
     `${JSON.stringify(
@@ -426,6 +427,7 @@ function selfTest() {
         counts: { rules: 1, craft: 1, skillFiles: 0 },
         files: {
           "rules/good.mdc": "0".repeat(64),
+          "rules/renamed-pack.mdc": renamedHash,
           "craft/good-craft.md": goodCraftHash,
         },
       },
