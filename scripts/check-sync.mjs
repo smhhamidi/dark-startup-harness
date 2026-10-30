@@ -410,6 +410,10 @@ function selfTest() {
     "---\nname: dummy\ndescription: Pairs with `ghost-skill` before deciding.\n---\n\nBody.\n",
   );
   w(path.join("packclone", "rules", "good.mdc"), "# good rule — drifted\n\nCraft: `good-craft.md`\n");
+  w(
+    path.join("packclone", "rules", "renamed-pack.mdc"),
+    "# renamed rule\n\nBody.\n\nCraft: `good-craft.md`\n",
+  );
   w(path.join("packclone", "craft", "good-craft.md"), "# good craft\n");
   // manifest fixture: the craft entry carries its true hash, the rule entry a
   // wrong one — the fingerprint mismatch must fire and nothing else may
@@ -430,6 +434,7 @@ function selfTest() {
     )}\n`,
   );
   w("entry.md", "# entry file missing its task-type map\n");
+  w("sync-map.txt", "renamed-pack.mdc -> local-name.mdc\n");
   const { problems } = runChecks({
     rules: path.join(tmp, "rules"),
     craft: path.join(tmp, "craft"),
@@ -445,6 +450,7 @@ function selfTest() {
     ["unresolved dependency", /unresolved dependency: .*ghost-skill/],
     ["routing line", /routing line: .*entry\.md/],
     ["drift", /drift: good\.mdc differs/],
+    ["sync-map drift", /drift: renamed-pack\.mdc → local-name\.mdc differs/],
     ["manifest fingerprint", /manifest: rules\/good\.mdc does not match its recorded fingerprint/],
   ];
   const missed = expected.filter(([, re]) => !problems.some((p) => re.test(p)));
@@ -457,7 +463,7 @@ function selfTest() {
     process.exit(1);
   }
   console.log(
-    "sync check self-test: PASS — all 7 planted defects fired (orphan rule, broken citation, unmapped craft, unresolved dependency, routing line, drift, manifest fingerprint)",
+    "sync check self-test: PASS — all 8 planted defects fired (orphan rule, broken citation, unmapped craft, unresolved dependency, routing line, drift, sync-map drift, manifest fingerprint)",
   );
 }
 
@@ -468,12 +474,15 @@ if (opt.help) {
       "Usage:",
       "  node scripts/check-sync.mjs                                   # pack self-check",
       "  node scripts/check-sync.mjs --rules <dir> --entry <file> \\",
-      "       [--craft <dir>] [--pack <clone>] [--overrides <file>]     # adopter check",
+      "       [--craft <dir>] [--pack <clone>] [--overrides <file>] \\",
+      "       [--map <file>]                                    # adopter check",
       "  node scripts/check-sync.mjs --self-test                        # prove the gate fires",
       "Checks: orphan rule, broken citation, unmapped craft, unresolved skill",
-      "dependency, routing line; clone drift when --pack is given; and the",
-      "packing manifest (MANIFEST.json) when one exists. Fails closed — missing",
-      "configuration is a failure, never a silent pass.",
+      "dependency, routing line; clone drift when --pack is given (renamed",
+      "adoptions pair through sync-map.txt, craft provenance headers are",
+      "tolerated, the clone's revision is reported); and the packing manifest",
+      "(MANIFEST.json) when one exists. Fails closed — missing configuration",
+      "is a failure, never a silent pass.",
     ].join("\n"),
   );
   process.exit(0);
