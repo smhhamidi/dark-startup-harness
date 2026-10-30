@@ -78,9 +78,11 @@ agent this:
 > `node scripts/check-sync.mjs --rules <our rules dir> --craft <our craft dir>
 > --entry <our entry file> --pack <this clone>`, and for every file it flags
 > as drift, copy the pack's version over ours — anything we deliberately keep
-> different goes in the overrides file, never silently. Rerun until it passes,
-> then report in plain language: what changed, what was adopted, and anything
-> that needs my decision.
+> different goes in the overrides file, never silently. Rerun until it passes.
+> If our entry instruction file doesn't already carry the session-start update
+> line from AGENT-SETUP.md step 7, add it, so future updates check themselves
+> instead of waiting on a reminder. Then report in plain language: what
+> changed, what was adopted, and anything that needs my decision.
 
 (The plain `node scripts/check-sync.mjs` run proves the received pack itself
 is intact; the `--rules/--craft/--pack` run is the one that compares the pack
