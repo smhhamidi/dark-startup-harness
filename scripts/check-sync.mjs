@@ -15,13 +15,21 @@
  *     is listed — what shipped is what is on disk, nothing swapped or missing
  *
  * Upstream drift (--pack <path to a pack clone>): every rules/*.mdc and
- * craft/*.md in the clone is hash-compared against the local copies under
+ * craft/*.md in the clone is compared against the local copies under
  * --rules / --craft. A difference or an absent file fails — that is an
- * update arriving, or a local copy drifting. A deliberately diverged,
- * not-adopted, or out-of-scope file (e.g. a project-native rule in a shared
- * directory) is recorded one basename per line in an overrides file
- * (default sync-overrides.txt next to the entry file); listed files are
- * reported as deliberate overrides and never fail.
+ * update arriving, or a local copy drifting. A project that adopted the
+ * pack under its own names (AGENT-SETUP step 6) records the pairing in a
+ * map file (default sync-map.txt next to the entry file), one line per
+ * file: `pack-basename -> local-basename`. Craft copies may carry a
+ * provenance header stamped ahead of the pack's bytes — the craft
+ * comparison tolerates a prepended header and fails on any real content
+ * change. A deliberately diverged, not-adopted, or out-of-scope file
+ * (e.g. a project-native rule in a shared directory) is recorded one
+ * basename per line in an overrides file (default sync-overrides.txt next
+ * to the entry file); listed files are reported as deliberate overrides
+ * and never fail. On a run against a git clone the check reports the
+ * clone's revision, so the project can record which pack revision its
+ * copies were last synced to.
  *
  * The check fails closed: a missing directory or entry file is reported as
  * a failure naming the flag that fixes it, never a silent pass.
@@ -39,6 +47,7 @@
  * Prove the gate fires:
  *   node scripts/check-sync.mjs --self-test
  */
+import { execFileSync } from "node:child_process";
 import { createHash } from "node:crypto";
 import {
   existsSync,
@@ -68,6 +77,7 @@ function parseArgs(argv) {
     else if (a === "--pack") opt.pack = argv[++i];
     else if (a === "--manifest") opt.manifest = argv[++i];
     else if (a === "--overrides") opt.overrides = argv[++i];
+    else if (a === "--map") opt.map = argv[++i];
     else {
       console.error(`sync check FAILED: unknown argument "${a}" (try --help)`);
       process.exit(1);
@@ -129,6 +139,26 @@ function loadOverrides(file) {
   return set;
 }
 
+// Pack basename -> local basename (or relative path) for files adopted
+// under the project's own names; lines look like `pack-file.mdc -> local.mdc`.
+function loadMap(file) {
+  const map = new Map();
+  const bad = [];
+  if (file && existsSync(file)) {
+    for (const l of readFileSync(file, "utf8").split(/\r?\n/)) {
+      const t = l.trim();
+      if (!t || t.startsWith("#")) continue;
+      const m = t.match(/^(\S+)\s*->\s*(\S+)$/);
+      if (!m) {
+        bad.push(t);
+        continue;
+      }
+      map.set(m[1], m[2]);
+    }
+  }
+  return { map, bad };
+}
+
 function runChecks(cfg) {
   const problems = [];
   const notes = [];
@@ -136,6 +166,15 @@ function runChecks(cfg) {
     cfg.overrides ??
       (cfg.entry ? path.join(path.dirname(path.resolve(cfg.entry)), "sync-overrides.txt") : null),
   );
+  const { map: syncMap, bad: badMapLines } = loadMap(
+    cfg.map ??
+      (cfg.entry ? path.join(path.dirname(path.resolve(cfg.entry)), "sync-map.txt") : null),
+  );
+  for (const line of badMapLines) {
+    problems.push(
+      `sync-map: "${line}" does not pair "pack-file -> local-file" — fix the line so the mapping loads`,
+    );
+  }
 
   // --- rules ↔ craft ---
   const ruleFiles = listFiles(cfg.rules, [".mdc", ".md"]);
@@ -224,10 +263,11 @@ function runChecks(cfg) {
   // --- upstream drift ---
   if (cfg.pack) {
     const lanes = [
-      [path.join(cfg.pack, "rules"), cfg.rules],
-      [path.join(cfg.pack, "craft"), cfg.craft],
+      [path.join(cfg.pack, "rules"), cfg.rules, "rules"],
+      [path.join(cfg.pack, "craft"), cfg.craft, "craft"],
     ];
-    for (const [packDir, localDir] of lanes) {
+    const seenPackBases = new Set();
+    for (const [packDir, localDir, lane] of lanes) {
       const files = listFiles(packDir, [".mdc", ".md"]);
       if (!files) {
         notes.push(`drift check: ${packDir} not found — nothing to compare`);
@@ -235,23 +275,53 @@ function runChecks(cfg) {
       }
       for (const f of files) {
         const base = path.basename(f);
+        seenPackBases.add(base);
         if (overrides.has(base)) {
           notes.push(`deliberate override: ${base}`);
           continue;
         }
-        const local = path.join(localDir, base);
+        const rel = syncMap.get(base) ?? base;
+        const shown = rel === base ? base : `${base} → ${rel}`;
+        if (rel !== base) notes.push(`sync-map: ${base} → ${rel}`);
+        const local = path.join(localDir, rel);
         if (!existsSync(local)) {
           problems.push(
-            `drift: ${base} exists in the pack clone but not under ${localDir} — adopt it, or record the deliberate non-adoption in the overrides file`,
+            `drift: ${base} exists in the pack clone but not as ${rel} under ${localDir} — adopt it, or record its local name in sync-map.txt, or record the deliberate non-adoption in the overrides file`,
           );
           continue;
         }
-        if (sha256(f) !== sha256(local)) {
+        let same = sha256(f) === sha256(local);
+        if (!same && lane === "craft") {
+          // a provenance header stamped ahead of the pack's bytes is an
+          // adoption mark, not a content change — the pack's bytes must
+          // survive intact as the tail
+          same = readFileSync(local, "utf8").endsWith(readFileSync(f, "utf8"));
+          if (same) notes.push(`craft provenance header tolerated: ${base}`);
+        }
+        if (!same) {
           problems.push(
-            `drift: ${base} differs from the pack clone — an update arrived (or the local copy was edited); adopt what changed or record the divergence in the overrides file`,
+            `drift: ${shown} differs from the pack clone — an update arrived (or the local copy was edited); adopt what changed or record the divergence in the overrides file`,
           );
         }
       }
+    }
+    for (const base of syncMap.keys()) {
+      if (!seenPackBases.has(base)) {
+        notes.push(
+          `sync-map: ${base} has no file in the pack clone — a stale mapping from an older pack revision?`,
+        );
+      }
+    }
+    try {
+      const rev = execFileSync("git", ["-C", cfg.pack, "rev-parse", "--short", "HEAD"], {
+        encoding: "utf8",
+        stdio: ["ignore", "pipe", "ignore"],
+      }).trim();
+      notes.push(
+        `pack revision ${rev} — record it wherever the project notes its synced pack revision`,
+      );
+    } catch {
+      // not a git clone (a zip, say) — the revision note is best-effort
     }
   }
 
@@ -325,7 +395,15 @@ function selfTest() {
     path.join("rules", "broken.mdc"),
     "# broken citation\n\nCraft: `good-craft.md`, `missing-craft.md`\n",
   );
-  w(path.join("craft", "good-craft.md"), "# good craft\n");
+  // renamed adoption: the pack's renamed-pack.mdc lives here as local-name.mdc
+  // (paired in sync-map.txt) and its content has drifted — the map lane must
+  // fire under the pairing, and the good-craft craft copy carries a provenance
+  // header ahead of the pack's bytes, which must be tolerated, not drift
+  w(
+    path.join("rules", "local-name.mdc"),
+    "# local rule — drifted\n\nCraft: `good-craft.md`\n",
+  );
+  w(path.join("craft", "good-craft.md"), "Provenance: adopted from the pack.\n# good craft\n");
   w(path.join("craft", "unmapped-craft.md"), "# unmapped craft\n");
   w(
     path.join("skills", "dummy", "SKILL.md"),
