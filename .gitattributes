@@ -1,2 +1,5 @@
 # Build output, fingerprinted by MANIFEST.json — a clone must check out the exact recorded bytes.
 * text eol=lf
+# Bundled fonts are binary: git must store their exact bytes, never normalize them.
+*.ttf -text
+*.pyc -text

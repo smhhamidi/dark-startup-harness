@@ -6,7 +6,7 @@
     "skillFiles": 22
   },
   "files": {
-    ".gitattributes": "719bc64903f5b30e12ee2af6fa5e316a7ffb13136ee1060a57b2b8625808f809",
+    ".gitattributes": "dfec87493f2c7c7d3c7ff86105971f4c593bb74581e658eba8b044c70fe74b3c",
     ".gitignore": "ad06f96d59778991ea39f6f6da37bf234c8ac6e703f8255338bae3b1252a434c",
     "AGENT-SETUP.md": "e1093cfc3dbfb51622cce2155c496f152e05f511acd5b1473f1e7a501595dba1",
     "CREDITS.md": "4660d8d0fdaf306e94d3268077cebb3941de32b06916ef67ff9f86abac67565e",
@@ -86,7 +86,6 @@
     "skills/persian-writing/references/seo-copywriting.md": "c9f4fa6fb3b70c85901824ccd54225271800ebd1c2dd7809b7271dfecc7f24ce",
     "skills/persian-writing/references/social-channels.md": "f13f58e825092abb2d4dbbc6f04408c3c923d7f90ec0f50407fe91e3caef199e",
     "skills/persian-writing/references/writing-style.md": "d70f98bbbdc75acf3ee1b9b77848ec013449e81996482e86998c95158d160145",
-    "skills/persian-writing/scripts/__pycache__/persian_cleanup.cpython-314.pyc": "046b34712d978a74291c8c757cb03f56c50be493871f505ed966ac9f9cfef3d7",
     "skills/persian-writing/scripts/build_universal.py": "faa904e45ff20274f53e4888e33697d12e452631ebd0b0eaf743347f892a7a7b",
     "skills/persian-writing/scripts/check_version.py": "ca501593329d5ac9800310d5edce8f76cbbf3506b0c33ab4aba2ad4b7161a313",
     "skills/persian-writing/scripts/download_fonts.py": "1dd6c8d6d9b40e81fadd8c4d397afbea3a8c77b0f7569aacf12fc62cb2e6e7f3",
