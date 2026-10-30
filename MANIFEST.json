@@ -6,6 +6,7 @@
     "skillFiles": 5
   },
   "files": {
+    ".gitattributes": "719bc64903f5b30e12ee2af6fa5e316a7ffb13136ee1060a57b2b8625808f809",
     ".gitignore": "ad06f96d59778991ea39f6f6da37bf234c8ac6e703f8255338bae3b1252a434c",
     "AGENT-SETUP.md": "f38d4a7a94c4c796ae8c574fee28209a2f7efd278437fc5a2fa7f08e08af4488",
     "CREDITS.md": "fec327c869d23ddeba96dad712f4ab410eec20b251b33ed472b278d6fa1451ba",
