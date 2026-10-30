@@ -70,6 +70,22 @@ authority by itself: portable craft, tooling and fixes adopt on pull, and
 a changed or new binding rule joins the project's rulebook only on the
 owner's yes.
 
+**Not technical? One paste does the whole update.** Send your project's
+agent this:
+
+> Update the harness pack: in the pack clone run `git pull`, then run
+> `node scripts/adoption-test.mjs`. Then reconcile our project copies: run
+> `node scripts/check-sync.mjs --rules <our rules dir> --craft <our craft dir>
+> --entry <our entry file> --pack <this clone>`, and for every file it flags
+> as drift, copy the pack's version over ours — anything we deliberately keep
+> different goes in the overrides file, never silently. Rerun until it passes,
+> then report in plain language: what changed, what was adopted, and anything
+> that needs my decision.
+
+(The plain `node scripts/check-sync.mjs` run proves the received pack itself
+is intact; the `--rules/--craft/--pack` run is the one that compares the pack
+against your project copies — a green pack check is not a green project.)
+
 Do not send pull requests here with content changes — the content
 originates upstream. See [PROVENANCE.md](PROVENANCE.md) for what is
 deliberately not here, and [CREDITS.md](CREDITS.md) for the pattern's roots.
