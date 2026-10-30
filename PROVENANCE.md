@@ -39,6 +39,15 @@ listed here so a reader can tell "deliberately absent" from "broken install":
 | `src/lib/*.ts` gates, `npm run eval:*` | every craft doc's gate lines | reference only — they name where the rule is enforced in the source deployment; none resolve from outside | Instructed, not enforced (see the levels below) |
 | `check-harness.ts` | rulebook-governance | the portable equivalent ships here: `scripts/check-sync.mjs` | No gap: run the shipped check |
 
+The shipped `persian-writing` skill is third-party work (upstream MIT,
+fonts SIL OFL — see CREDITS.md). Its host's private layer was removed for
+this pack: the host's provenance wording, one host-only routing row, the
+private review-gate reference file, and the host variants and development
+trees (`universal/`, `tests/`, `evals/`, repo dev docs and the banner).
+What ships is the upstream body: SKILL.md, references, scripts, and the
+bundled fonts and word list the scripts need. The skill's own MIT licence
+file travels inside the skill directory.
+
 ## Enforcement levels
 
 Per task-continuity-contract: **instructed** (prose only) / **fixture-tested**
