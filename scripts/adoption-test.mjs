@@ -150,16 +150,18 @@ try {
   );
 
   // 7. renamed adoption — a pack file adopted under the project's own name
-  //    (AGENT-SETUP step 6) maps through sync-map.txt and passes clean
+  //    (AGENT-SETUP step 6) maps through a sync map and passes clean; the map
+  //    is passed via --map at a non-default path, proving the flag is wired
   const packRules = readdirSync(path.join(PACK_ROOT, "rules")).filter((f) => f.endsWith(".mdc"));
   const packRule = packRules[0];
   const renamedLocal = `renamed-${packRule}`;
   copyFileSync(path.join(PACK_ROOT, "rules", packRule), path.join(projRules, renamedLocal));
   rmSync(path.join(projRules, packRule));
-  writeFileSync(path.join(tmp, "sync-map.txt"), `${packRule} -> ${renamedLocal}\n`);
-  r = runCheckSync(adopterArgs);
+  const mapFile = path.join(tmp, "adopter-map.txt");
+  writeFileSync(mapFile, `${packRule} -> ${renamedLocal}\n`);
+  r = runCheckSync([...adopterArgs, "--map", mapFile]);
   step(
-    "renamed adoption: sync-map.txt pairs a pack file to the project's own name",
+    "renamed adoption: a sync map (via --map) pairs a pack file to the project's own name",
     r.code === 0 && r.out.includes(`sync-map: ${packRule} → ${renamedLocal}`),
     r.code === 0 ? "" : r.out.trim().split("\n")[0],
   );
@@ -171,7 +173,7 @@ try {
     path.join(projCraft, headedBase),
     `Provenance: adopted from the harness pack.\n${readFileSync(path.join(PACK_ROOT, "craft", headedBase), "utf8")}`,
   );
-  r = runCheckSync(adopterArgs);
+  r = runCheckSync([...adopterArgs, "--map", mapFile]);
   step(
     "provenance header: a stamped craft copy passes, not drift",
     r.code === 0 && r.out.includes(`craft provenance header tolerated: ${headedBase}`),

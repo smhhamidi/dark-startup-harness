@@ -502,6 +502,7 @@ const { problems, notes, manifestVerified } = runChecks({
   pack: opt.pack ? path.resolve(opt.pack) : null,
   manifest: opt.manifest ?? null,
   overrides: opt.overrides ? path.resolve(opt.overrides) : null,
+  map: opt.map ? path.resolve(opt.map) : null,
 });
 for (const n of notes) console.log(`note: ${n}`);
 if (problems.length) {
