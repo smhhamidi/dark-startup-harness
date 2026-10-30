@@ -46,8 +46,9 @@ Per task-continuity-contract: **instructed** (prose only) / **fixture-tested**
 **witnessed end-to-end** (observed live). In this pack, every gate line
 citing `src/lib/*.ts` or `npm run eval:*` is **instructed**. What ships and
 runs: `scripts/check-scrub.mjs` (fails closed; prove it fires on a planted
-marker), `scripts/check-sync.mjs` (`--self-test` proves it fires on seven
-planted defect classes, including a manifest fingerprint mismatch), and
+marker), `scripts/check-sync.mjs` (`--self-test` proves it fires on eight
+planted defect classes, including a sync-map pairing drift and a manifest
+fingerprint mismatch), and
 `scripts/adoption-test.mjs` — a fixture install of the whole pack into a
 throwaway project, the pack's own **fixture-tested** proof that the checks
 behave on the receiving side, not just on the publisher's. `MANIFEST.json`
