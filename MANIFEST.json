@@ -3,7 +3,7 @@
   "counts": {
     "rules": 19,
     "craft": 23,
-    "skillFiles": 22
+    "skillFiles": 39
   },
   "files": {
     ".gitattributes": "dfec87493f2c7c7d3c7ff86105971f4c593bb74581e658eba8b044c70fe74b3c",
@@ -11,7 +11,7 @@
     "AGENT-SETUP.md": "e1093cfc3dbfb51622cce2155c496f152e05f511acd5b1473f1e7a501595dba1",
     "CREDITS.md": "4660d8d0fdaf306e94d3268077cebb3941de32b06916ef67ff9f86abac67565e",
     "LICENCE": "5bdf0c5ae5942ffccf46290d9cda1860c77396e58d2782952f8849538c264502",
-    "PROVENANCE.md": "a95ead09f23f069c375816793e4f19984cb4e5e88a10bffb73a4cdd6425586c0",
+    "PROVENANCE.md": "f1929676d25e7d873212d172349ac5f8b9a857995939c5f2748d242e4a17d2ce",
     "README.md": "68a48c2dbd27c2524a0e23e62a10f9cc56b23d5245f703a4908540d292a70419",
     "craft/agent-browser-control.md": "5bd571db9640f166ef5f15f68ab8984218644fa6b4088987816d2eb4313f6b6b",
     "craft/agent-skill-learning.md": "b35e732e26af8002eb3d893d4beb7ada30e553983e11457b971cc1460113ec66",
@@ -61,7 +61,7 @@
     "skills/decision-framework/SKILL.md": "d3429d09cd278507a06989bb6a38aa76ad4904b89a17eaa364ca8e1154c839bb",
     "skills/jobs-to-be-done/SKILL.md": "e36da2645796ffc80fc8af74dd3789733674709676a20e5de2b4901fcc380074",
     "skills/persian-writing/LICENSE": "3f7524ca97aa0f90fedfa69e31aada5cace1d860d07c2e540f69d088eeb4f960",
-    "skills/persian-writing/SKILL.md": "43aba54fbafe1c9c968d4862ef7fbd3d3f5d8c175b225c0f92aadffe6947b66a",
+    "skills/persian-writing/SKILL.md": "f3979b884901f76891563d65876fc3fd268bceb70217cfae4c069c871a011593",
     "skills/persian-writing/assets/fonts/Lalezar-Regular.ttf": "87ac2cefad76a91adbe9286a6d3d683741c781a7ddf841914479674d7939a8cd",
     "skills/persian-writing/assets/fonts/README.md": "af8a5694bb61ddd737bd1fd0409eb1b59dcb3888f26584cb75649c6f30655333",
     "skills/persian-writing/assets/fonts/Vazirmatn-Black.ttf": "df4e257be9de1574d11ba2970c69228a7db24174913ff7f776bbf00a9aa5dc1b",
