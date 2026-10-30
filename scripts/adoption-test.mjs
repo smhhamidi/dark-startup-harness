@@ -17,7 +17,11 @@
  *                              the failure into a reported override
  *   4. missing configuration→ a nonexistent rules dir fails closed
  *   5. pack self-check      → the received pack itself passes (incl. MANIFEST)
- *   6. gate-fires proof     → check-sync --self-test passes 7/7 planted defects
+ *   6. gate-fires proof     → check-sync --self-test passes 8/8 planted defects
+ *   7. renamed adoption     → a pack file adopted under the project's own name
+ *                              (AGENT-SETUP step 6) pairs through sync-map.txt
+ *   8. provenance header    → a craft copy stamped with a header ahead of the
+ *                              pack's bytes is tolerated, not drift
  *
  * Exits 0 only when every step behaved; prints one PASS line per step and a
  * summary. Pure Node builtins — no install, nothing left behind (the
@@ -33,6 +37,7 @@ import {
   mkdirSync,
   mkdtempSync,
   readdirSync,
+  readFileSync,
   rmSync,
   writeFileSync,
 } from "node:fs";
@@ -140,8 +145,37 @@ try {
   // 6. the gate-fires proof passes on this machine
   r = runCheckSync(["--self-test"]);
   step(
-    "self-test: all 7 planted defects fire on this machine",
-    r.code === 0 && /7 planted defects/.test(r.out),
+    "self-test: all 8 planted defects fire on this machine",
+    r.code === 0 && /8 planted defects/.test(r.out),
+  );
+
+  // 7. renamed adoption — a pack file adopted under the project's own name
+  //    (AGENT-SETUP step 6) maps through sync-map.txt and passes clean
+  const packRules = readdirSync(path.join(PACK_ROOT, "rules")).filter((f) => f.endsWith(".mdc"));
+  const packRule = packRules[0];
+  const renamedLocal = `renamed-${packRule}`;
+  copyFileSync(path.join(PACK_ROOT, "rules", packRule), path.join(projRules, renamedLocal));
+  rmSync(path.join(projRules, packRule));
+  writeFileSync(path.join(tmp, "sync-map.txt"), `${packRule} -> ${renamedLocal}\n`);
+  r = runCheckSync(adopterArgs);
+  step(
+    "renamed adoption: sync-map.txt pairs a pack file to the project's own name",
+    r.code === 0 && r.out.includes(`sync-map: ${packRule} → ${renamedLocal}`),
+    r.code === 0 ? "" : r.out.trim().split("\n")[0],
+  );
+
+  // 8. provenance header — a craft copy stamped by the adopting project
+  //    (a header ahead of the pack's bytes) is tolerated, not drift
+  const headedBase = `${craftNames[1]}.md`;
+  writeFileSync(
+    path.join(projCraft, headedBase),
+    `Provenance: adopted from the harness pack.\n${readFileSync(path.join(PACK_ROOT, "craft", headedBase), "utf8")}`,
+  );
+  r = runCheckSync(adopterArgs);
+  step(
+    "provenance header: a stamped craft copy passes, not drift",
+    r.code === 0 && r.out.includes(`craft provenance header tolerated: ${headedBase}`),
+    r.code === 0 ? "" : r.out.trim().split("\n")[0],
   );
 
   if (!existsSync(path.join(PACK_ROOT, "MANIFEST.json"))) {
@@ -153,7 +187,7 @@ try {
     console.error(`adoption test: ${passed}/${results.length} steps behaved — see the FAIL lines above`);
     process.exit(1);
   }
-  console.log(`adoption test: PASS — ${passed}/${results.length} steps behaved (install, drift detection, override, fail-closed, pack integrity, gate-fires proof)`);
+  console.log(`adoption test: PASS — ${passed}/${results.length} steps behaved (install, drift detection, override, fail-closed, pack integrity, gate-fires proof, renamed adoption, provenance header)`);
 } finally {
   rmSync(tmp, { recursive: true, force: true });
 }

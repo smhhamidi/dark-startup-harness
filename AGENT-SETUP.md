@@ -41,6 +41,9 @@ needed again — the setup is a bootstrap, not a habit.
 6. **If this project was started by someone else:** adopt the playbook as a
    layer on top, never a rewrite. Their code style, file layout, history and
    decisions stay theirs; the rules govern how work proceeds from now on.
+   A pack file adopted under the project's own name or layout is recorded
+   in `sync-map.txt` next to the entry file (one line per file:
+   `pack-file -> local-file`), so the sync check can follow the pairing.
    Land the adoption as one reviewed change in their repo, keep their
    conventions in everything you touch, and let the first report name what
    was adopted and what their project keeps unchanged.

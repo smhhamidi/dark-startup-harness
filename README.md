@@ -49,8 +49,11 @@ and do what it says." It performs the whole first-session setup pass in one go.
    with the pack. Internal consistency always (an orphan rule, a broken
    citation, an unmapped craft doc, an unresolved skill dependency); with
    `--pack <clone>` it also fails on drift versus the pack clone — an
-   update arriving. Run `--self-test` once and confirm it fires before
-   trusting it.
+   update arriving. Projects that adopted the pack under their own file
+   names pair them in `sync-map.txt` (next to the entry file, one line per
+   file: `pack-file -> local-file`), and a provenance header stamped ahead
+   of a craft copy's bytes is tolerated. Run `--self-test` once and confirm
+   it fires before trusting it.
 4. Test-drive the install once: `node scripts/adoption-test.mjs` from the
    pack root rehearses the whole adoption in a throwaway project — it proves
    the checks actually fire there (a planted drift fails, a recorded override
@@ -78,7 +81,9 @@ agent this:
 > `node scripts/check-sync.mjs --rules <our rules dir> --craft <our craft dir>
 > --entry <our entry file> --pack <this clone>`, and for every file it flags
 > as drift, copy the pack's version over ours — anything we deliberately keep
-> different goes in the overrides file, never silently. Rerun until it passes.
+> different goes in the overrides file, never silently. A file we adopted
+> under a different name is paired in sync-map.txt, next to the entry file.
+> Rerun until it passes.
 > If our entry instruction file doesn't already carry the session-start update
 > line from AGENT-SETUP.md step 7, add it, so future updates check themselves
 > instead of waiting on a reminder. Then report in plain language: what
