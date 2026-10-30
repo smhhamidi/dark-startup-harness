@@ -41,12 +41,14 @@ listed here so a reader can tell "deliberately absent" from "broken install":
 
 The shipped `persian-writing` skill is third-party work (upstream MIT,
 fonts SIL OFL — see CREDITS.md). Its host's private layer was removed for
-this pack: the host's provenance wording, one host-only routing row, the
-private review-gate reference file, and the host variants and development
-trees (`universal/`, `tests/`, `evals/`, repo dev docs and the banner).
-What ships is the upstream body: SKILL.md, references, scripts, and the
-bundled fonts and word list the scripts need. The skill's own MIT licence
-file travels inside the skill directory.
+this pack: the host's provenance wording, one host-only routing row with
+its private review-gate file, and the host variants and development trees
+(`universal/`, `tests/`, `evals/`, repo dev docs and the banner). One
+reference is host-authored and ships because it is fully portable and
+names no host: `references/gate.md`, the outside review loop for prose
+that ships. Everything else is the upstream body: SKILL.md, references,
+scripts, and the bundled fonts and word list the scripts need. The
+skill's own MIT licence file travels inside the skill directory.
 
 ## Enforcement levels
 

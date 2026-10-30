@@ -25,7 +25,7 @@ compatibility: >
 
 # Persian Writing & RTL Documents
 
-> **Source:** [persian-writing](https://github.com/ali2000hos/persian-writing) v1.4.0 (MIT licence; bundled fonts under SIL OFL), shipped in this pack from 2026-10-30. This copy is the upstream original minus its host's private layer: the host's provenance wording, one host-only routing row, and its private review-gate reference were removed so nothing host-specific ships — the upstream repo is the authority for upstream changes; re-diff before re-importing. `scripts/fa_lint.py --check <file>` is the mechanical gate for Persian-facing deliverables before they ship.
+> **Source:** [persian-writing](https://github.com/ali2000hos/persian-writing) v1.4.0 (MIT licence; bundled fonts under SIL OFL), shipped in this pack from 2026-10-30. This copy is the upstream original minus its host's private layer: the host's provenance wording and one host-only routing row with its private review-gate file were removed. One reference, the outside review loop (`references/gate.md`), is host-authored but fully portable and stays. The upstream repo is the authority for upstream changes; re-diff before re-importing. `scripts/fa_lint.py --check <file>` is the mechanical gate for Persian-facing deliverables before they ship.
 
 Two failure modes make Persian output look machine-made, and they are independent:
 
