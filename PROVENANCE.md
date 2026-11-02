@@ -36,6 +36,7 @@ listed here so a reader can tell "deliberately absent" from "broken install":
 |---|---|---|---|
 | `data-sufficiency` skill | jobs-to-be-done (frontmatter, judge step), decision-framework (closing note) | not shipped — owner-supplied by hand | Degrades, never blocks: judge with a named evaluation instead of a number |
 | `ops-access-before-ask` craft | pre-task-readiness ("when installed") | not shipped — project-local craft, write your own | Degrades: the access-probe rules in pre-task-readiness still apply |
+| `audit-claims-pass` craft | independent-review-before-ship | not shipped — project-local craft, write your own | Degrades: the shipped review-trace gate (independent-review-before-ship) still applies; a full pre-report claims audit is yours to write |
 | `src/lib/*.ts` gates, `npm run eval:*` | every craft doc's gate lines | reference only — they name where the rule is enforced in the source deployment; none resolve from outside | Instructed, not enforced (see the levels below) |
 | `check-harness.ts` | rulebook-governance | the portable equivalent ships here: `scripts/check-sync.mjs` | No gap: run the shipped check |
 
@@ -57,9 +58,9 @@ Per task-continuity-contract: **instructed** (prose only) / **fixture-tested**
 **witnessed end-to-end** (observed live). In this pack, every gate line
 citing `src/lib/*.ts` or `npm run eval:*` is **instructed**. What ships and
 runs: `scripts/check-scrub.mjs` (fails closed; prove it fires on a planted
-marker), `scripts/check-sync.mjs` (`--self-test` proves it fires on eight
-planted defect classes, including a sync-map pairing drift and a manifest
-fingerprint mismatch), and
+marker), `scripts/check-sync.mjs` (`--self-test` proves it fires on nine
+planted defect classes, including a dead relative link, a sync-map pairing
+drift and a manifest fingerprint mismatch), and
 `scripts/adoption-test.mjs` — a fixture install of the whole pack into a
 throwaway project, the pack's own **fixture-tested** proof that the checks
 behave on the receiving side, not just on the publisher's. `MANIFEST.json`

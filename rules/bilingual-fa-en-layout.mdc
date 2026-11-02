@@ -12,6 +12,7 @@ When owner-facing prose mixes **Persian and English**, Latin on the same line as
 - **Own-line English (primary):** paths, commands, rule ids, npm scripts, URLs, and status labels on their **own line**, under **جزئیات** / **Details**, or in a fenced block.
 - **Persian lines = zero Latin letters.** Backticks mid-sentence are not enough.
 - **Cursor chat default (2026-08-23):** prefer **English** owner replies — this UI left-aligns RTL and does not present Persian correctly. Persian only if the owner asks that turn; bilingual habit is mitigation only, not an RTL fix.
+- **The default travels as the source deployment's, not as law:** it was locked for the pack's origin chat UI, which mangles Persian. A project whose owner reads Persian comfortably records its own default in its decision log and that ruling replaces this one; the zero-Latin-on-Persian-lines layout rule stands either way.
 - Does **not** replace the shared reporting rules or `owner-facing-sensors`. Does **not** apply to English-only replies.
 
 Before send (Persian draft): `assertBilingualFaEnLayout` on the text.

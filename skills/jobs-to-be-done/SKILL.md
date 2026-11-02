@@ -14,7 +14,7 @@ description: >-
 
 # Jobs to be done (JTBD)
 
-> **Source:** the root playbook credited in [CREDITS.md](../../CREDITS.md), MIT licence, imported 2026-10-07 by the principal's pick under the outside-playbook rule. This copy is the workspace canonical with the company-local sections and this provenance scrubbed for public travel; re-derive it on upstream re-import (the weekly outside-playbook check). The body is otherwise the imported original.
+> **Source:** the root playbook credited in CREDITS.md at the pack root, MIT licence, imported 2026-10-07 by the principal's pick under the outside-playbook rule. This copy is the workspace canonical with the company-local sections and this provenance scrubbed for public travel; re-derive it on upstream re-import (the weekly outside-playbook check). The body is otherwise the imported original.
 
 Sources, from the literature as known to the model, not re-read in the session that wrote this skill
 (2026-09-16). Treat quotes as paraphrases:

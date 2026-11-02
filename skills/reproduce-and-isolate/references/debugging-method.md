@@ -1,6 +1,6 @@
 # Debugging method (universal)
 
-> **Source:** the root playbook credited in [CREDITS.md](../../../CREDITS.md), MIT licence, imported 2026-10-07 by the principal's pick under the outside-playbook rule. This copy is the workspace canonical with the company-local sections and this provenance scrubbed for public travel; re-derive it on upstream re-import (the weekly outside-playbook check). The body is otherwise the imported original.
+> **Source:** the root playbook credited in CREDITS.md at the pack root, MIT licence, imported 2026-10-07 by the principal's pick under the outside-playbook rule. This copy is the workspace canonical with the company-local sections and this provenance scrubbed for public travel; re-derive it on upstream re-import (the weekly outside-playbook check). The body is otherwise the imported original.
 
 > **Layer map template** — write the map for the system in hand before any RCA; analytics is a layer of its own:
 > - **Frontend path:** browser → edge/CDN → app server / BFF → API — note where deploy state can differ from repo HEAD

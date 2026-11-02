@@ -17,6 +17,12 @@ needed again — the setup is a bootstrap, not a habit.
    project's rule directory (or as includes of the entry instruction file).
    Rules are always-managed, not always-loaded: the entry file carries the
    routing table only.
+   Line endings: the pack clone checks out LF everywhere (its
+   `.gitattributes`). If the adopting project's git rewrites the copied
+   files to CRLF (the Windows default), the sync check still passes — it
+   compares content with line endings normalized. Adding `* text eol=lf`
+   for the adopted files to the project's own `.gitattributes` keeps
+   diffs clean.
 2. **Add the routing table** to the entry instruction file: task type → which
    craft doc to read first. Craft is read on demand; never load all of it.
 3. **Start the two state files the pack deliberately does not carry** (see
@@ -29,6 +35,13 @@ needed again — the setup is a bootstrap, not a habit.
    lands in this log. This is also how
    this machine's state reaches the standing state fast: every durable
    answer lands in a repo file the same day, never only in chat.
+   One more file starts empty later, not on day one: the
+   **parallel-session claims list** the `parallel-sessions-announce` rule
+   reads — a shared file where each session records the multi-turn goal it
+   holds, so parallel sessions do not duplicate work. Create it where the
+   project keeps shared state when the first multi-turn goal starts; its
+   name and place are the project's choice, and the entry file says where
+   it lives.
 4. **Build the first gate early:** one self-check command the session can run
    before claiming work done — the cheapest check with the biggest effect.
    Every further gate is added only when a real defect earns one; a gate
@@ -38,6 +51,12 @@ needed again — the setup is a bootstrap, not a habit.
    A skill not shipped here arrives from the owner by hand, never from files,
    and never guessed at; PROVENANCE.md ("Referenced, not shipped") lists
    every such item, so an absence is deliberate, never a broken install.
+   If the agent's skills directory already holds a skill with the same
+   name, **never overwrite it** — the project's own skill stays; name the
+   difference in the report and record the pairing in the project's
+   decision log — `sync-map.txt` carries renamed rules and craft files
+   only, and the sync check flags any other entry as stale. The pack's
+   copy is the upstream reference to diff against, not a replacement.
 6. **If this project was started by someone else:** adopt the playbook as a
    layer on top, never a rewrite. Their code style, file layout, history and
    decisions stay theirs; the rules govern how work proceeds from now on.

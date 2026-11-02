@@ -16,7 +16,7 @@ description: >-
 
 # Decision framework (universal)
 
-> **Source:** the root playbook credited in [CREDITS.md](../../CREDITS.md), MIT licence, imported 2026-10-07 by the principal's pick under the outside-playbook rule. This copy is the workspace canonical with the company-local sections and this provenance scrubbed for public travel; re-derive it on upstream re-import (the weekly outside-playbook check). The body is otherwise the imported original.
+> **Source:** the root playbook credited in CREDITS.md at the pack root, MIT licence, imported 2026-10-07 by the principal's pick under the outside-playbook rule. This copy is the workspace canonical with the company-local sections and this provenance scrubbed for public travel; re-derive it on upstream re-import (the weekly outside-playbook check). The body is otherwise the imported original.
 
 How to decide, prioritize, and recommend — distilled from decision frameworks that
 proved out in practice; org-grounded versions live in each org's own docs (bound in
