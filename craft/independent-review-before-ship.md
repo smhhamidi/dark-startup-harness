@@ -30,7 +30,7 @@ In addition, the work report to the principals states the verdict.
 
 - the high-stakes class B section of [`second-order-thinking.md`](second-order-thinking.md): that rule reviews the owner-facing artifact before the owner sees it; this rule reviews the change before it ships. One review serves both only when it meets Class B's own bar — a smarter reviewer, defect-first against live evidence; an ordinary independent-review trace never replaces Class B.
 - [`failure-stuck-loop-learning.md`](failure-stuck-loop-learning.md): a FAIL trace is a trigger there.
-- [`audit-claims-pass.md`](../../docs/craft/audit-claims-pass.md): audits of a session's work before a report ships.
+- `audit-claims-pass.md` (upstream craft, deliberately not shipped — see PROVENANCE.md): audits of a session's work before a report ships.
 
 ## Machine form (the gate is code, not prose)
 

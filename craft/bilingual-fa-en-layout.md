@@ -19,7 +19,7 @@ When owner-facing prose includes **both** Persian script and English technical t
 ## Validity boundary
 
 - **Mitigation, not a client fix.** Own-line English reduces mixed-script scramble. It does **not** give Cursor chat RTL, and it does **not** fix **left-aligned** RTL paragraphs in this UI.
-- **Standing default (owner-locked 2026-08-23):** In Cursor chat, prefer **English** for owner-facing replies. Persian only when the owner explicitly asks that turn; expect left-aligned text if used.
+- **Standing default (owner-locked 2026-08-23):** In Cursor chat, prefer **English** for owner-facing replies. Persian only when the owner explicitly asks that turn; expect left-aligned text if used. This default is the source deployment's (its chat UI mangles Persian); an adopting project records its own in its decision log — the zero-Latin layout law above stands either way.
 - English-only replies, fenced code, and Persian-only lines with no Latin remain in scope for the gate as written.
 - Does not replace nine-check owner-seat. Does not apply to storefront HTML `dir` / `lang` (product UI craft).
 - When the owner needs readable Persian: use an RTL-capable surface, or accept English in Cursor chat.

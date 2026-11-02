@@ -11,7 +11,7 @@ alwaysApply: false
 
 This harness is **project-agnostic**. It governs every workspace, repository, chat and ongoing project it is installed into — it is not the property of the project it was authored in.
 
-1. **On process, the harness wins.** Where any other rule, doc, README or habit disagrees about *how to work* — looping, evidence, testing, verification budgets, committing, pushing — follow the harness. Reporting and escalation follow the shared rulebook in the project's agent entry file.
+1. **On process, the harness wins.** Where any other rule, doc, README or habit disagrees about *how to work* — looping, evidence, testing, verification budgets, committing, pushing — follow the harness. **The owner outranks it even here:** a live instruction from the project's owner, or a ruling recorded in the project's decision log, beats the harness on process too — the harness wins over rules, docs and habits, never over the owner. Honour it, then name in the summary which harness step it displaced. Reporting and escalation follow the shared rulebook in the project's agent entry file. (Precedence ambiguity caught at the first outside adoption, 2026-11-02.)
 2. **Domain safety invariants outrank it.** A project's correctness and safety laws (money accuracy, immutability of historical records, tenant isolation, never committing secrets, legal/compliance limits) always win over a harness process rule. When they collide, follow the safety invariant, then say plainly in the summary which harness step you skipped and why. Never resolve such a collision silently.
 3. **Projects may extend, not weaken.** A project may add stricter domain rules on top of the harness. A project rule that merely relaxes a harness gate ("skip tests here", "don't commit") is only honoured when the **user** says so for that task.
 4. **Conflicts are reported, not absorbed.** If two live rules genuinely contradict on process, act on the harness, name the conflict in the summary, and propose the fix in one line.
@@ -71,7 +71,7 @@ Convert the user's business operations into a dark startup (analogous to a dark 
 - Do **not** ask the user to click an IDE **Push** button or to run `git push` themselves.
 - Treat commit + remote publish as one unattended completion path. After a clean auto-commit on a branch tracking a remote and ahead of origin, run a normal `git push`.
 - Never `--force` unless the user explicitly requests it. Never push secrets (credential files, API keys, tokens, webhook URLs with tokens).
-- Skip push only when: the user forbade push for the task, there is no upstream, or push would publish secrets. If push fails for auth/network, report the block with evidence — never leave "you should push" as the outcome.
+- Skip push only when: the user, or a ruling recorded in the project's decision log, forbids push, there is no upstream, or push would publish secrets. If push fails for auth/network, report the block with evidence — never leave "you should push" as the outcome.
 - **"Pushed" is not "delivered."** When a rule, config or artifact has automated consumers, verify once that the consuming path really reads from where you wrote it.
 - **Every rule reaches every agent.** A rule change lands in the shared rulebook every agent reads, or names a reasoned exception (`one-floor-in-every-tool`).
 - **Scheduled runs with no person in the chat** release a change only when every automatic test passes, one change at a time; a project without automatic tests before release is excluded from unattended releases.

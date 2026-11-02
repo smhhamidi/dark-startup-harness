@@ -17,7 +17,7 @@
  *                              the failure into a reported override
  *   4. missing configuration→ a nonexistent rules dir fails closed
  *   5. pack self-check      → the received pack itself passes (incl. MANIFEST)
- *   6. gate-fires proof     → check-sync --self-test passes 8/8 planted defects
+ *   6. gate-fires proof     → check-sync --self-test passes 9/9 planted defects
  *   7. renamed adoption     → a pack file adopted under the project's own name
  *                              (AGENT-SETUP step 6) pairs through sync-map.txt
  *   8. provenance header    → a craft copy stamped with a header ahead of the
@@ -145,8 +145,8 @@ try {
   // 6. the gate-fires proof passes on this machine
   r = runCheckSync(["--self-test"]);
   step(
-    "self-test: all 8 planted defects fire on this machine",
-    r.code === 0 && /8 planted defects/.test(r.out),
+    "self-test: all 9 planted defects fire on this machine",
+    r.code === 0 && /9 planted defects/.test(r.out),
   );
 
   // 7. renamed adoption — a pack file adopted under the project's own name

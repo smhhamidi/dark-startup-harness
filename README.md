@@ -42,13 +42,16 @@ Fastest route: paste your agent one line — "read AGENT-SETUP.md in this repo
 and do what it says." It performs the whole first-session setup pass in one go.
 
 1. Copy `rules/*.mdc` into your agent's rule directory (e.g.
-   `.cursor/rules/` or your editor's equivalent).
+   `.cursor/rules/` or your editor's equivalent). The sync check compares
+   content with line endings normalized, so a project whose git rewrites
+   CRLF still passes.
 2. Add one routing table to your entry instruction file: task type → which
    craft doc to read first. Craft is read on demand; only the routing table
    is always loaded.
 3. Keep the two halves in sync mechanically: `scripts/check-sync.mjs` ships
    with the pack. Internal consistency always (an orphan rule, a broken
-   citation, an unmapped craft doc, an unresolved skill dependency); with
+   citation, an unmapped craft doc, an unresolved skill dependency, a dead
+   relative link); with
    `--pack <clone>` it also fails on drift versus the pack clone — an
    update arriving. Projects that adopted the pack under their own file
    names pair them in `sync-map.txt` (next to the entry file, one line per

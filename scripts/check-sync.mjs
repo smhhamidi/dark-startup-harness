@@ -10,13 +10,21 @@
  *     skills/ nor is listed in PROVENANCE.md's "Referenced, not shipped" table
  *   - routing line: the entry file (and the pack's AGENT-SETUP.md, when present)
  *     must name the routing table the adopting project builds
+ *   - dead link: a relative markdown link in the pack's own .md/.mdc files
+ *     that resolves to nothing inside the pack — a deliberately absent item
+ *     is named in PROVENANCE.md ("Referenced, not shipped"), never linked
+ *     (first outside adoption, 2026-11-02: craft linked a source-repo path
+ *     that does not exist in the pack)
  *   - manifest: when a MANIFEST.json exists (the packing slip the build writes),
  *     every listed file is present with its recorded sha256 and every tree file
  *     is listed — what shipped is what is on disk, nothing swapped or missing
  *
  * Upstream drift (--pack <path to a pack clone>): every rules/*.mdc and
  * craft/*.md in the clone is compared against the local copies under
- * --rules / --craft. A difference or an absent file fails — that is an
+ * --rules / --craft, with line endings normalized (\r\n vs \n is not
+ * content — a project whose git rewrites the adopted copies to CRLF must
+ * not trip drift on every file; first outside adoption, 2026-11-02). A
+ * difference or an absent file fails — that is an
  * update arriving, or a local copy drifting. A project that adopted the
  * pack under its own names (AGENT-SETUP step 6) records the pairing in a
  * map file (default sync-map.txt next to the entry file), one line per
@@ -290,12 +298,18 @@ function runChecks(cfg) {
           );
           continue;
         }
-        let same = sha256(f) === sha256(local);
+        // Line endings are not content: compare with \r\n normalized away
+        // (a Windows project whose git rewrote the adopted copies to CRLF
+        // tripped drift on every file — noise that buries a real update).
+        // The pack clone itself stays byte-exact: its .gitattributes
+        // (eol=lf) and the manifest lane below still fingerprint exact bytes.
+        const eol = (s) => s.replace(/\r\n/g, "\n");
+        let same = eol(readFileSync(f, "utf8")) === eol(readFileSync(local, "utf8"));
         if (!same && lane === "craft") {
           // a provenance header stamped ahead of the pack's bytes is an
           // adoption mark, not a content change — the pack's bytes must
           // survive intact as the tail
-          same = readFileSync(local, "utf8").endsWith(readFileSync(f, "utf8"));
+          same = eol(readFileSync(local, "utf8")).endsWith(eol(readFileSync(f, "utf8")));
           if (same) notes.push(`craft provenance header tolerated: ${base}`);
         }
         if (!same) {
@@ -377,6 +391,38 @@ function runChecks(cfg) {
   } else {
     notes.push("manifest check skipped: no MANIFEST.json here (an older pack, or a source checkout)");
   }
+  // --- dead relative links (a shipped doc pointing at nothing) ---
+  // Every relative markdown link in the pack's own .md/.mdc files must
+  // resolve inside the pack. In-pack layout links (README → PROVENANCE.md,
+  // a skill's references) pass; a link to the source repo's tree does not —
+  // name the absence in PROVENANCE.md instead of linking it. Links inside
+  // code (fenced blocks, inline backticks) are examples, not links — the
+  // persian-writing skill documents `[link](url)` as markdown syntax, and
+  // backtick citations of the source deployment's code paths are
+  // reference-only by PROVENANCE's live-surface rule, so neither is in
+  // this lane's scope. Known edges, accepted: a fence longer than three
+  // backticks would strip short (none exist in the pack); a titled link
+  // (](path "title")) is not matched; a missing image reports as a dead
+  // link — mislabeled, but a missing image is still worth surfacing.
+  const linkRoot = cfg.pack ?? ROOT;
+  for (const f of walkDir(linkRoot).filter((p) => /\.(md|mdc)$/i.test(p))) {
+    const rel = path.relative(linkRoot, f);
+    const prose = readFileSync(f, "utf8")
+      .replace(/```[\s\S]*?```/g, "")
+      .replace(/`[^`\n]*`/g, "");
+    for (const m of prose.matchAll(/\]\(\s*([^)\s]+)\s*\)/g)) {
+      const raw = m[1];
+      if (/^[a-z][a-z0-9+.-]*:/i.test(raw) || raw.startsWith("#") || raw.startsWith("/")) continue; // external URL, anchor, absolute — not pack layout
+      const target = raw.split("#")[0];
+      if (!target) continue; // pure anchor
+      if (!existsSync(path.resolve(path.dirname(f), target))) {
+        problems.push(
+          `dead link: ${rel} links "${raw}" which is not in the pack — fix the source, or name the absence in PROVENANCE.md ("Referenced, not shipped") instead of linking it`,
+        );
+      }
+    }
+  }
+
   return { problems, notes, manifestVerified };
 }
 
@@ -403,7 +449,7 @@ function selfTest() {
     path.join("rules", "local-name.mdc"),
     "# local rule — drifted\n\nCraft: `good-craft.md`\n",
   );
-  w(path.join("craft", "good-craft.md"), "Provenance: adopted from the pack.\n# good craft\n");
+  w(path.join("craft", "good-craft.md"), "Provenance: adopted from the pack.\n# good craft\n\nSee [the guide](no-such-guide.md). Code example: `[link](url)`.\n\n```\n[fenced](also-missing.md)\n```\n");
   w(path.join("craft", "unmapped-craft.md"), "# unmapped craft\n");
   w(
     path.join("skills", "dummy", "SKILL.md"),
@@ -414,11 +460,29 @@ function selfTest() {
     path.join("packclone", "rules", "renamed-pack.mdc"),
     "# renamed rule\n\nBody.\n\nCraft: `good-craft.md`\n",
   );
-  w(path.join("packclone", "craft", "good-craft.md"), "# good craft\n");
+  // line-ending tolerance: identical content rewritten with CRLF must NOT
+  // fire drift — a Windows project whose git rewrites the adopted copies
+  // (first outside adoption, 2026-11-02). It must also raise no other
+  // problem: the noise check below fails on anything unexpected.
+  w(
+    path.join("packclone", "rules", "crlf-same.mdc"),
+    "# crlf rule\n\nBody.\n\nCraft: `good-craft.md`\n",
+  );
+  w(
+    path.join("rules", "crlf-same.mdc"),
+    "# crlf rule\r\n\r\nBody.\r\n\r\nCraft: `good-craft.md`\r\n",
+  );
+  // the dead-link fixture: both craft copies carry a link to a file
+  // that is in neither tree — the lane must fire. The same file also
+  // plants a backticked code example and a fenced block whose link
+  // targets nothing: both must stay silent (code is example, not link),
+  // and the noise check below fails the self-test if either fires.
+  w(path.join("packclone", "craft", "good-craft.md"), "# good craft\n\nSee [the guide](no-such-guide.md). Code example: `[link](url)`.\n\n```\n[fenced](also-missing.md)\n```\n");
   // manifest fixture: the craft entry carries its true hash, the rule entry a
   // wrong one — the fingerprint mismatch must fire and nothing else may
   const goodCraftHash = sha256(path.join(tmp, "packclone", "craft", "good-craft.md"));
   const renamedHash = sha256(path.join(tmp, "packclone", "rules", "renamed-pack.mdc"));
+  const crlfHash = sha256(path.join(tmp, "packclone", "rules", "crlf-same.mdc"));
   w(
     path.join("packclone", "MANIFEST.json"),
     `${JSON.stringify(
@@ -428,6 +492,7 @@ function selfTest() {
         files: {
           "rules/good.mdc": "0".repeat(64),
           "rules/renamed-pack.mdc": renamedHash,
+          "rules/crlf-same.mdc": crlfHash,
           "craft/good-craft.md": goodCraftHash,
         },
       },
@@ -454,6 +519,7 @@ function selfTest() {
     ["drift", /drift: good\.mdc differs/],
     ["sync-map drift", /drift: renamed-pack\.mdc → local-name\.mdc differs/],
     ["manifest fingerprint", /manifest: rules\/good\.mdc does not match its recorded fingerprint/],
+    ["dead link", /dead link: craft\/good-craft\.md links "no-such-guide\.md"/],
   ];
   const missed = expected.filter(([, re]) => !problems.some((p) => re.test(p)));
   const noise = problems.filter((p) => !expected.some(([, re]) => re.test(p)));
@@ -465,7 +531,7 @@ function selfTest() {
     process.exit(1);
   }
   console.log(
-    "sync check self-test: PASS — all 8 planted defects fired (orphan rule, broken citation, unmapped craft, unresolved dependency, routing line, drift, sync-map drift, manifest fingerprint)",
+    "sync check self-test: PASS — all 9 planted defects fired (orphan rule, broken citation, unmapped craft, unresolved dependency, routing line, drift, sync-map drift, manifest fingerprint, dead link); a CRLF-rewritten identical copy passes as same, not drift",
   );
 }
 
@@ -480,7 +546,7 @@ if (opt.help) {
       "       [--map <file>]                                    # adopter check",
       "  node scripts/check-sync.mjs --self-test                        # prove the gate fires",
       "Checks: orphan rule, broken citation, unmapped craft, unresolved skill",
-      "dependency, routing line; clone drift when --pack is given (renamed",
+      "dependency, routing line, dead relative link; clone drift when --pack is given (renamed",
       "adoptions pair through sync-map.txt, craft provenance headers are",
       "tolerated, the clone's revision is reported); and the packing manifest",
       "(MANIFEST.json) when one exists. Fails closed — missing configuration",
