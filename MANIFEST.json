@@ -3,26 +3,26 @@
   "counts": {
     "rules": 19,
     "craft": 23,
-    "skillFiles": 39
+    "skillFiles": 40
   },
   "files": {
     ".gitattributes": "dfec87493f2c7c7d3c7ff86105971f4c593bb74581e658eba8b044c70fe74b3c",
     ".gitignore": "ad06f96d59778991ea39f6f6da37bf234c8ac6e703f8255338bae3b1252a434c",
-    "AGENT-SETUP.md": "967bd2d5045af371cd1f3fa9ff9459f03417c36f8255583b6ab322546e03a47c",
+    "AGENT-SETUP.md": "d14d1eba3a47b523eacff02f7c8b37676d2ff79e85ea1ee829987329b699011d",
     "CREDITS.md": "4660d8d0fdaf306e94d3268077cebb3941de32b06916ef67ff9f86abac67565e",
     "LICENCE": "5bdf0c5ae5942ffccf46290d9cda1860c77396e58d2782952f8849538c264502",
     "PROVENANCE.md": "083e18eb4360ec35fa83572bab55e88c69942875bce57a5babe6c21930a8714a",
-    "README.md": "bd85c24b098b2cbe1c3b2a07d0e335f038d7dfee13a4fdf4e606b7392a278bd9",
+    "README.md": "c28ef3357e6f4398168460861b6c88cc7eff19ebbba0876dfd102df631a99aaf",
     "craft/agent-browser-control.md": "5bd571db9640f166ef5f15f68ab8984218644fa6b4088987816d2eb4313f6b6b",
     "craft/agent-skill-learning.md": "b35e732e26af8002eb3d893d4beb7ada30e553983e11457b971cc1460113ec66",
-    "craft/agent-telegram.md": "b8b3da02111f7c19826d615bdb42427f394595090349c5995b22f6cce689b59c",
-    "craft/agent-watchdog.md": "dc376d427dbd160ac35fa7cde402051d9d7a75d9d8461dfb1bdb5e85a3258bcc",
+    "craft/agent-telegram.md": "a565cf092fc4a00e3aa30ccf9e2bbd95a4d2e76381bba536cd6bb59f5372428c",
+    "craft/agent-watchdog.md": "e28f0e6b421ebc4989d991e277a052fd7a469e608cfc425c606ef8651bab3e8d",
     "craft/bilingual-fa-en-layout.md": "993d5763b7ac124aa52bc99e90f9883a1ccd7f53b62f659f7d10bac2583fd619",
     "craft/censored-network-access.md": "a285504a744ac23272a221a25a1166e7fdcc8bda3f1298ac3c99d7f0fe218f15",
     "craft/close-agent-opened-browser-surfaces.md": "54b0e389d23288e47129a6a416a606909e135aaa35e4c334ae3c7361926d2b93",
     "craft/evidence-discipline.md": "a6c4742da44d0d757e09733ef4463be14b90332d3c01fdbba51bb7e85713efdf",
     "craft/failure-stuck-loop-learning.md": "278689cfbed14b63015f3297b320c7f26e85a88ec06b1d7a55b63cfb41229910",
-    "craft/independent-review-before-ship.md": "22c69bccbb7ce42eee0cb47572d54ccd367ef6fea59df2b015825cd81ff200b8",
+    "craft/independent-review-before-ship.md": "66f210b1cef8c96beb82e87fcd005c37b3200ecf6e6bae1687f40814483f7f05",
     "craft/keep-current-shared-craft.md": "e521a9bb837de6d8191e66e64bc2651bd521f4a4c39f14d7b7428a8c952a6467",
     "craft/model-weight-routing.md": "a2f09d7076700db36e766772a535091d26b7e1015d1103d989ad6fa839daf058",
     "craft/one-floor-in-every-tool.md": "c2e523ea4ebd790cf36d61e0ff216650f3ad4430ffe3c8907931b1b96f7c6cf2",
@@ -31,7 +31,7 @@
     "craft/pre-task-readiness.md": "1fe4dabecbdd08d951cd26bde6ddb0053a71019b3f338c555c7d229af9bb1c6a",
     "craft/proactive-onboarding-arc.md": "32122b6cc7936bf11af8a35a28a683fd6f8eec6976838a3d0339645e11456bdd",
     "craft/public-publish-needs-ask.md": "9bbac6539e43fd3844ed8bfa7f2322f278b76cabf8c24c163f1095d940805b52",
-    "craft/rulebook-governance.md": "737497c0fae29de6430cb0b5c5baa9153c023485611e979c917e7b7acdd944fe",
+    "craft/rulebook-governance.md": "51bf165382a4f30b6a29293b94a8d24fc33b3691529a8ee1e0ed3f5fbe5189df",
     "craft/second-order-thinking.md": "f095d4544c15a1a104fd725bd035424ec6c95d8b9f1ffc6528bee8d07e877a84",
     "craft/self-driving-goal-loop.md": "19a8b5d07b79312a52c90fb185aa88f146e7d0462afa135f56eb2b1e2c077aba",
     "craft/self-improving-harness.md": "4e951a31477d2ccf63fb488a63d12c5b555518ce0f62a33d500a78d7f40a7a37",
@@ -96,6 +96,7 @@
     "skills/persian-writing/scripts/verify_pdf.py": "df7e36daa46665ea929f533ce39aed6538b3a30e05d0f00e436a3e4939079eb2",
     "skills/reproduce-and-isolate/SKILL.md": "0d3bb62fdb14e15ce67b8ff664156c9da82338e070ae2af7d062477d7f45f6b8",
     "skills/reproduce-and-isolate/references/debugging-method.md": "ecd8a8e5b29e69179ee1ff68d9d2f9a0adc62ae62fc1eb9efda9f9242681255c",
-    "skills/reproduce-and-isolate/references/sources.md": "8785d4c16c5fd2001802595eead48b5478ce3f58457d309597770166e6e175d7"
+    "skills/reproduce-and-isolate/references/sources.md": "8785d4c16c5fd2001802595eead48b5478ce3f58457d309597770166e6e175d7",
+    "skills/telegram-ops/SKILL.md": "725a0f1848b693bf4e385ea9d468443758395ccdb460c142e09bc770263a31fb"
   }
 }

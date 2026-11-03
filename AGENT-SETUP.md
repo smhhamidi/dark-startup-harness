@@ -74,7 +74,9 @@ needed again — the setup is a bootstrap, not a habit.
    from the clone, with `--rules`/`--craft` pointing at the project's
    installed copies and `--pack` at the clone) — a failure on drift versus
    the pack clone means an update arrived; fetch it, inspect what changed,
-   and report what changed."
+   and report what changed. Task start: match the task against the entry
+   file's routing table and open the mapped guide BEFORE the work —
+   Telegram and browser work never begin without theirs."
    Fetching grants no authority by itself. Portable craft, tooling and
    fixes adopt on pull with provenance recorded; a changed or new
    **binding rule** travels as a suggestion and joins the project's
