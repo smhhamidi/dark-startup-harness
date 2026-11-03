@@ -49,6 +49,7 @@ Before acting on a change that will be shown as done:
    - Overrun / spin → independent check (`assertOverrunAudit`).
    - Smoke-only work may use `not_required_smoke` — never `missing`.
 5. **Prove the effect, not the status** — URL up / HTTP 200 / `{ ok: true }` is not Pass.
+5a. **A user-facing deliverable is done only when seen in the user's view** — rendered through the browser test tools (the screenshot examined), with the user's entry path checked: the page the user lands on must reach the shipped thing. Source, API and grep checks never close a user-facing job (owner ruling 2026-11-03; gate `assertHumanFacingOutputWasSeen`, evidence-discipline §23).
 6. Fail closed: a red evaluation is not a reportable done; revise and re-run the **same** check.
 
 Gate: `assertStrictGatePlan` in `src/lib/failure-learning.ts` (`npm run eval:failure-learning`).
