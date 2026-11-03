@@ -21,7 +21,7 @@ live deployment and scrubbed of everything that identifies it.
   outcome-chain, parallel-sessions-announce, pre-task-readiness,
   proactive-onboarding-arc, public-publish-needs-ask, rulebook-governance,
   second-order-thinking, self-driving-goal-loop, self-improving-harness,
-  task-continuity-contract.
+  startup-and-drift-gates, task-continuity-contract.
 - `skills/` — the portable skills (reproduce-and-isolate, decision-framework,
   jobs-to-be-done, persian-writing, telegram-ops), scrubbed company-local
   sections, provenance and bibliography intact. Install into the agent's skills
