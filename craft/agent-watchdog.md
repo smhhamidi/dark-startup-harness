@@ -15,6 +15,7 @@ Rules and failure-learning only help when the agent that failed actually runs th
 | Customer messages | Sent from the wrong identity, sent without a send order, wrong numbers or prices, customer data in the wrong chat |
 | Rule changes | A rule added without its source label, an inference treated as binding on money or customers without a principal's yes, a copy of the shared rulebook drifting |
 | Runner acts | The goal runner executed a step outside its read-only authority, wrote state outside data/output, or an unattended run tried to publish code (the deploy canary refuses the last; the watchdog reads it anyway). Parked rows (needs-review or blocked) are the runner's designed waiting states — reported, never flagged |
+| Rule respect | A principal-facing reply that breaks the report rules — no outcome first, a section silently dropped, blocker language on an optional ask or a true blocker without its fix, prose blocks with no bold headings; a reversible step postponed to "later" without a principal's word; an ask a check could have answered; an unmeasured or unsourced number in an owner-facing line; a reply to a principal in a language other than the one that principal has fixed; a send that lacked its gate. Owner ruling 2026-10-28 ("I agree", after catching a blocker mislabel by hand): this area exists so that class reaches the principals already fixed, never as their round-trip |
 
 ## Tick protocol
 
@@ -24,6 +25,18 @@ Rules and failure-learning only help when the agent that failed actually runs th
 4. Report to the principals: one line on a quiet day; otherwise the flagged items, plain language, outcome first.
 5. Append each big mistake to the working collective failures ledger (`~/.cursor/plugins/local/dark-startup-harness/collective/failures.md`; `npm run watchdog:bootstrap` seeds it from the pristine `harness/collective/failures.md` template — the repo template is never appended to) so the class is visible to the next run.
 6. Record the tick (`npm run watchdog:tick`), which updates the autonomy score.
+
+## Rulebook-compliance pass (the rule-respect area)
+
+The other five areas are checked from work artifacts; rule respect is checked from the day's **principal-facing words** — the class a principal otherwise catches by hand. Mechanics (owner ruling 2026-10-28):
+
+1. **Input, bounded:** the previous day's assistant replies to principals, extracted from the local session transcripts (`~/.zcode/cli/log/zcode-<date>.jsonl` — assistant text only; tool calls, thinking and raw command output are never handed over). One pass per day, never per turn: the cost is one reviewer run, the same price as a per-change review card.
+2. **Reviewer, genuinely cross-vendor:** the second opinion rides a reviewer on a different PROVIDER than the session model (owner correction 2026-10-28) — on this box's glm sessions that is kimi-reviewer (Moonshot), never glm-reviewer. It reads the extracted replies against the shared rulebook's reporting, deciding, message and working rules (the workspace AGENTS.md shared block, rules 1–9 and 21) and the owner-facing surfaces of `evidence-discipline`.
+3. **Judged classes:** report-format breaks (outcome first, sections never dropped, blockers line exact — blocker language only for what stops work or needs a principal's act, each with its fix), a reply to a principal in a language other than the one that principal has fixed, postponed reversible work, asks that a check could answer, unmeasured numbers, sends without their gates. Style is never graded (anti-pattern below); a wording preference is not a finding.
+4. **Output, flags never blocks:** findings join the same pipeline as every other area — `data/output/watchdog-findings.json` (area `rule-respect`), the failures ledger, the inbox flag to the main agent, one line per finding in the daily report. The pass never re-checks money math or code (the per-change review cards own that), and it never blocks a send or a release; it records and flags.
+
+The efficiency floor (owner question 2026-10-28 "is it efficient?"): one bounded pass per day. If a day's transcripts are too large for one reviewer run, the pass samples the principal-facing replies (every reply that answered an ask, plus the day's final reports) and says so in its line — it never expands into per-turn review.
+
 
 ## Autonomy score → pace
 

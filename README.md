@@ -23,8 +23,8 @@ live deployment and scrubbed of everything that identifies it.
   second-order-thinking, self-driving-goal-loop, self-improving-harness,
   task-continuity-contract.
 - `skills/` — the portable skills (reproduce-and-isolate, decision-framework,
-  jobs-to-be-done, persian-writing), scrubbed company-local sections,
-  provenance and bibliography intact. Install into the agent's skills
+  jobs-to-be-done, persian-writing, telegram-ops), scrubbed company-local
+  sections, provenance and bibliography intact. Install into the agent's skills
   directory.
 - `scripts/` + `MANIFEST.json` — the machine checks that travel with the pack:
   `check-scrub.mjs` (the publisher's scrub gate, fails closed), `check-sync.mjs`
