@@ -25,6 +25,11 @@ needed again — the setup is a bootstrap, not a habit.
    diffs clean.
 2. **Add the routing table** to the entry instruction file: task type → which
    craft doc to read first. Craft is read on demand; never load all of it.
+   Suggested starter rows — copy and adapt the right side: a number or a
+   cause reaching the owner → `evidence-discipline`; a failure, an owner
+   dispute or a restart-to-fix → `failure-stuck-loop-learning`; any ship,
+   push or review → `independent-review-before-ship`; Telegram work →
+   `agent-telegram`; browser control → `agent-browser-control`.
 3. **Start the two state files the pack deliberately does not carry** (see
    [PROVENANCE.md](PROVENANCE.md)): a dated **decision log** (every ruling:
    source label + date + scope + the words it came from) and a dated

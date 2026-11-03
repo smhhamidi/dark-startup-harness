@@ -2,17 +2,17 @@
   "pack": "dark-startup-harness",
   "counts": {
     "rules": 19,
-    "craft": 23,
+    "craft": 24,
     "skillFiles": 40
   },
   "files": {
     ".gitattributes": "dfec87493f2c7c7d3c7ff86105971f4c593bb74581e658eba8b044c70fe74b3c",
     ".gitignore": "ad06f96d59778991ea39f6f6da37bf234c8ac6e703f8255338bae3b1252a434c",
-    "AGENT-SETUP.md": "d14d1eba3a47b523eacff02f7c8b37676d2ff79e85ea1ee829987329b699011d",
+    "AGENT-SETUP.md": "fcb1d15a6cfd3dfb107c9d52ceb36c7bc8c48fa71c115d1580a3fdaee03ad9bc",
     "CREDITS.md": "4660d8d0fdaf306e94d3268077cebb3941de32b06916ef67ff9f86abac67565e",
     "LICENCE": "5bdf0c5ae5942ffccf46290d9cda1860c77396e58d2782952f8849538c264502",
     "PROVENANCE.md": "083e18eb4360ec35fa83572bab55e88c69942875bce57a5babe6c21930a8714a",
-    "README.md": "c28ef3357e6f4398168460861b6c88cc7eff19ebbba0876dfd102df631a99aaf",
+    "README.md": "2a1b78e744608ca87ded87a7e252ef4364a5d82c0f9e4146600c78836af98859",
     "craft/agent-browser-control.md": "5bd571db9640f166ef5f15f68ab8984218644fa6b4088987816d2eb4313f6b6b",
     "craft/agent-skill-learning.md": "b35e732e26af8002eb3d893d4beb7ada30e553983e11457b971cc1460113ec66",
     "craft/agent-telegram.md": "a565cf092fc4a00e3aa30ccf9e2bbd95a4d2e76381bba536cd6bb59f5372428c",
@@ -35,6 +35,7 @@
     "craft/second-order-thinking.md": "f095d4544c15a1a104fd725bd035424ec6c95d8b9f1ffc6528bee8d07e877a84",
     "craft/self-driving-goal-loop.md": "19a8b5d07b79312a52c90fb185aa88f146e7d0462afa135f56eb2b1e2c077aba",
     "craft/self-improving-harness.md": "4e951a31477d2ccf63fb488a63d12c5b555518ce0f62a33d500a78d7f40a7a37",
+    "craft/startup-and-drift-gates.md": "8ad03208d7a6e9d0c16f8436fff17a91f75c7bc794b4666457f3bf2f0e019436",
     "craft/task-continuity-contract.md": "b97eff745f42b044a77b63d5ed9dc677a8d42cf2d0894a3d9a1eed324d48ac71",
     "rules/agent-skill-learning.mdc": "ea8e29e202809154be3fbd70b4dcd28182bc95a09dcd0202f10b2ec8862dc137",
     "rules/agent-watchdog.mdc": "bc1f80867fa62c8fa4c1302a582ba37a8d7d29e6a5676060ed619d465fd12cdf",
